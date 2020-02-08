@@ -1,0 +1,36 @@
+[hyoo_github_compare_body] {
+	display: flex;
+	flex-direction: column;
+}
+
+[hyoo_github_compare_projects] {
+	flex: 0 0 auto;
+}
+
+[hyoo_github_compare_project] {
+	flex: 1 1 14rem;
+}
+
+[hyoo_github_compare_project_input] {
+	display: flex;
+}
+
+[hyoo_github_compare_project_id] {
+	font-weight: bold;
+}
+
+[hyoo_github_compare_project_capacity] {
+	display: block;
+	padding: 1rem;
+	font-size: 2rem;
+	line-height: 1;
+}
+
+[hyoo_github_compare_chart] {
+	flex: 1 0 10rem;
+	margin: 0 0.5rem;
+}
+
+[hyoo_github_compare_description] {
+	padding: 1rem;
+}

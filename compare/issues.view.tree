@@ -1,4 +1,4 @@
-$mol_app_issues $mol_page
+$hyoo_github_compare $mol_page
 	title @ \Time of unresolving issues of GitHub projects
 	tools /
 		<= Sources $mol_link_iconed
@@ -19,10 +19,10 @@ $mol_app_issues $mol_page
 					labels <= project_labels /string
 		<= Description $mol_view
 			sub / <= description @ \Sum of ages of all open issues. Lower is better.
-	Project!index $mol_app_issues_project
+	Project!index $hyoo_github_compare_project
 		id?val <=> project_id!index?val \
 
-$mol_app_issues_project $mol_view
+$hyoo_github_compare_project $mol_view
 	capacity 0
 	sub /
 		<= Input $mol_view sub /

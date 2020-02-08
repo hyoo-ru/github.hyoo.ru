@@ -1,6 +1,6 @@
 namespace $.$$ {
 	
-	export class $mol_app_issues extends $.$mol_app_issues {
+	export class $hyoo_github_compare extends $.$hyoo_github_compare {
 
 		@ $mol_mem
 		project_ids( next? : string[] ) : string[] {
@@ -36,7 +36,7 @@ namespace $.$$ {
 
 	}
 	
-	export class $mol_app_issues_project extends $.$mol_app_issues_project {
+	export class $hyoo_github_compare_project extends $.$hyoo_github_compare_project {
 
 		uri_project() {
 			return 'https://api.github.com/repos/' + this.id()

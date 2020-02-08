@@ -22,7 +22,7 @@ jobs:
       uses: hyoo-ru/mam_build@master
       with:
         module: 'hyoo/github/compare'
-        package: 'hyoo_github'
+        package: 'hyoo/github'
     - name: Deploy on GitHub Pages
       uses: alex-page/blazing-fast-gh-pages-deploy@v1.0.1
       with:

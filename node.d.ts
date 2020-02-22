@@ -458,7 +458,7 @@ declare namespace $ {
             '#m': (duration: $mol_time_duration) => string;
             '#s': (duration: $mol_time_duration) => string;
             '+hh': (duration: $mol_time_duration) => string;
-            'mm': (duration: $mol_time_duration) => string;
+            mm: (duration: $mol_time_duration) => string;
         };
     }
 }
@@ -494,35 +494,35 @@ declare namespace $ {
         toJSON(): string;
         toString(pattern?: string): string;
         static patterns: {
-            'YYYY': (moment: $mol_time_moment) => string;
-            'AD': (moment: $mol_time_moment) => string;
-            'YY': (moment: $mol_time_moment) => string;
-            'Month': (moment: $mol_time_moment) => string;
+            YYYY: (moment: $mol_time_moment) => string;
+            AD: (moment: $mol_time_moment) => string;
+            YY: (moment: $mol_time_moment) => string;
+            Month: (moment: $mol_time_moment) => string;
             'DD Month': (moment: $mol_time_moment) => string;
             'D Month': (moment: $mol_time_moment) => string;
-            'Mon': (moment: $mol_time_moment) => string;
+            Mon: (moment: $mol_time_moment) => string;
             'DD Mon': (moment: $mol_time_moment) => string;
             'D Mon': (moment: $mol_time_moment) => string;
             '-MM': (moment: $mol_time_moment) => string;
-            'MM': (moment: $mol_time_moment) => string;
-            'M': (moment: $mol_time_moment) => string;
-            'WeekDay': (moment: $mol_time_moment) => string;
-            'WD': (moment: $mol_time_moment) => string;
+            MM: (moment: $mol_time_moment) => string;
+            M: (moment: $mol_time_moment) => string;
+            WeekDay: (moment: $mol_time_moment) => string;
+            WD: (moment: $mol_time_moment) => string;
             '-DD': (moment: $mol_time_moment) => string;
-            'DD': (moment: $mol_time_moment) => string;
-            'D': (moment: $mol_time_moment) => string;
-            'Thh': (moment: $mol_time_moment) => string;
-            'hh': (moment: $mol_time_moment) => string;
-            'h': (moment: $mol_time_moment) => string;
+            DD: (moment: $mol_time_moment) => string;
+            D: (moment: $mol_time_moment) => string;
+            Thh: (moment: $mol_time_moment) => string;
+            hh: (moment: $mol_time_moment) => string;
+            h: (moment: $mol_time_moment) => string;
             ':mm': (moment: $mol_time_moment) => string;
-            'mm': (moment: $mol_time_moment) => string;
-            'm': (moment: $mol_time_moment) => string;
+            mm: (moment: $mol_time_moment) => string;
+            m: (moment: $mol_time_moment) => string;
             ':ss': (moment: $mol_time_moment) => string;
-            'ss': (moment: $mol_time_moment) => string;
-            's': (moment: $mol_time_moment) => string;
+            ss: (moment: $mol_time_moment) => string;
+            s: (moment: $mol_time_moment) => string;
             '.sss': (moment: $mol_time_moment) => string;
-            'sss': (moment: $mol_time_moment) => string;
-            'Z': (moment: $mol_time_moment) => string;
+            sss: (moment: $mol_time_moment) => string;
+            Z: (moment: $mol_time_moment) => string;
         };
     }
 }
@@ -899,16 +899,16 @@ declare namespace $ {
         click(event?: any, force?: $mol_mem_force): any;
         event_click(event?: any, force?: $mol_mem_force): any;
         event(): {
-            "click": (event?: any) => any;
-            "keypress": (event?: any) => any;
+            click: (event?: any) => any;
+            keypress: (event?: any) => any;
         };
         event_activate(event?: any, force?: $mol_mem_force): any;
         event_key_press(event?: any, force?: $mol_mem_force): any;
         attr(): {
-            "disabled": boolean;
-            "role": string;
-            "tabindex": number;
-            "title": string;
+            disabled: boolean;
+            role: string;
+            tabindex: number;
+            title: string;
         };
         disabled(): boolean;
         tab_index(): number;
@@ -936,11 +936,11 @@ declare namespace $ {
 declare namespace $ {
     class $mol_button_major extends $mol_button_typed {
         attr(): {
-            "mol_theme": string;
-            "disabled": boolean;
-            "role": string;
-            "tabindex": number;
-            "title": string;
+            mol_theme: string;
+            disabled: boolean;
+            role: string;
+            tabindex: number;
+            title: string;
         };
     }
 }
@@ -977,13 +977,13 @@ declare namespace $ {
         minimal_height(): number;
         _event_scroll_timer(val?: any, force?: $mol_mem_force): any;
         field(): {
-            "scrollTop": any;
-            "scrollLeft": any;
+            scrollTop: any;
+            scrollLeft: any;
         };
         scroll_top(val?: any, force?: $mol_mem_force): any;
         scroll_left(val?: any, force?: $mol_mem_force): any;
         event(): {
-            "scroll": (event?: any) => any;
+            scroll: (event?: any) => any;
         };
         event_scroll(event?: any, force?: $mol_mem_force): any;
     }
@@ -1086,11 +1086,11 @@ declare namespace $ {
     class $mol_link extends $mol_view {
         dom_name(): string;
         attr(): {
-            "href": string;
-            "title": string;
-            "target": string;
-            "download": string;
-            "mol_link_current": boolean;
+            href: string;
+            title: string;
+            target: string;
+            download: string;
+            mol_link_current: boolean;
         };
         uri(): string;
         hint(): string;
@@ -1100,7 +1100,7 @@ declare namespace $ {
         sub(): readonly (string | number | boolean | Node | $mol_view)[];
         arg(): {};
         event(): {
-            "click": (event?: any) => any;
+            click: (event?: any) => any;
         };
         click(event?: any, force?: $mol_mem_force): any;
         event_click(event?: any, force?: $mol_mem_force): any;
@@ -1127,8 +1127,8 @@ declare namespace $ {
     class $mol_image extends $mol_view {
         dom_name(): string;
         field(): {
-            "src": string;
-            "alt": string;
+            src: string;
+            alt: string;
         };
         uri(): string;
     }
@@ -1276,8 +1276,8 @@ declare namespace $ {
     class $mol_svg_root extends $mol_svg {
         dom_name(): string;
         attr(): {
-            "viewBox": string;
-            "preserveAspectRatio": string;
+            viewBox: string;
+            preserveAspectRatio: string;
         };
         view_box(): string;
         aspect(): string;
@@ -1295,11 +1295,11 @@ declare namespace $ {
         series_x(): readonly number[];
         series_y(): readonly number[];
         attr(): {
-            "mol_plot_graph_type": string;
+            mol_plot_graph_type: string;
         };
         type(): string;
         style(): {
-            "color": string;
+            color: string;
         };
         color(): string;
         viewport(): $mol_vector_2d<$mol_vector_range<number>>;
@@ -1329,11 +1329,11 @@ declare namespace $ {
 declare namespace $ {
     class $mol_plot_graph_sample extends $mol_view {
         attr(): {
-            "mol_plot_graph_type": string;
+            mol_plot_graph_type: string;
         };
         type(): string;
         style(): {
-            "color": string;
+            color: string;
         };
         color(): string;
     }
@@ -1425,14 +1425,14 @@ declare namespace $ {
             "touch-action": string;
         };
         event(): {
-            "touchstart": (event?: any) => any;
-            "touchmove": (event?: any) => any;
-            "touchend": (event?: any) => any;
-            "mousedown": (event?: any) => any;
-            "mousemove": (event?: any) => any;
-            "mouseup": (event?: any) => any;
-            "mouseleave": (event?: any) => any;
-            "wheel": (event?: any) => any;
+            touchstart: (event?: any) => any;
+            touchmove: (event?: any) => any;
+            touchend: (event?: any) => any;
+            mousedown: (event?: any) => any;
+            mousemove: (event?: any) => any;
+            mouseup: (event?: any) => any;
+            mouseleave: (event?: any) => any;
+            wheel: (event?: any) => any;
         };
         event_start(event?: any, force?: $mol_mem_force): any;
         event_move(event?: any, force?: $mol_mem_force): any;
@@ -1503,7 +1503,7 @@ declare namespace $ {
         Meter(): $$.$mol_meter;
         Touch(): $$.$mol_touch;
         event(): {
-            "dblclick": (event?: any) => any;
+            dblclick: (event?: any) => any;
         };
         reset(event?: any, force?: $mol_mem_force): any;
     }
@@ -1540,7 +1540,7 @@ declare namespace $ {
     class $mol_svg_path extends $mol_svg {
         dom_name(): string;
         attr(): {
-            "d": string;
+            d: string;
         };
         geometry(): string;
     }
@@ -1550,7 +1550,7 @@ declare namespace $ {
     class $mol_plot_bar extends $mol_plot_graph {
         style(): {
             "stroke-width": string;
-            "color": string;
+            color: string;
         };
         stroke_width(): string;
         sub(): readonly any[];
@@ -1582,10 +1582,10 @@ declare namespace $ {
         dom_name(): string;
         pos(): readonly any[];
         attr(): {
-            "width": string;
-            "height": string;
-            "x": string;
-            "y": string;
+            width: string;
+            height: string;
+            x: string;
+            y: string;
         };
         width(): string;
         height(): string;
@@ -1606,8 +1606,8 @@ declare namespace $ {
         dom_name(): string;
         pos(): readonly any[];
         attr(): {
-            "x": string;
-            "y": string;
+            x: string;
+            y: string;
             "text-anchor": string;
         };
         pos_x(): string;
@@ -1791,12 +1791,12 @@ declare namespace $ {
         minimal_height(): number;
         autocomplete(): boolean;
         field(): {
-            "disabled": boolean;
-            "value": any;
-            "placeholder": string;
-            "type": any;
-            "spellcheck": boolean;
-            "autocomplete": string;
+            disabled: boolean;
+            value: any;
+            placeholder: string;
+            type: any;
+            spellcheck: boolean;
+            autocomplete: string;
         };
         disabled(): boolean;
         value_changed(val?: any, force?: $mol_mem_force): any;
@@ -1806,12 +1806,12 @@ declare namespace $ {
         spellcheck(): boolean;
         autocomplete_native(): string;
         attr(): {
-            "maxlength": number;
+            maxlength: number;
         };
         length_max(): number;
         event(): {
-            "input": (event?: any) => any;
-            "keydown": (event?: any) => any;
+            input: (event?: any) => any;
+            keydown: (event?: any) => any;
         };
         event_change(event?: any, force?: $mol_mem_force): any;
         event_key_press(event?: any, force?: $mol_mem_force): any;

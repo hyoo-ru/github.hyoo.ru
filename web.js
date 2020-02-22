@@ -127,11 +127,10 @@ var $;
                 init(this);
         }
         get $() {
-            var _b;
             if (this[$.$mol_ambient_ref])
                 return this[$.$mol_ambient_ref];
             const owner = $.$mol_owning_get(this);
-            return this[$.$mol_ambient_ref] = ((_b = owner) === null || _b === void 0 ? void 0 : _b.$) || $mol_object2.$;
+            return this[$.$mol_ambient_ref] = (owner === null || owner === void 0 ? void 0 : owner.$) || $mol_object2.$;
         }
         set $(next) {
             if (this[$.$mol_ambient_ref])
@@ -1316,6 +1315,8 @@ var $;
     $.$mol_mem_cached = $.$mol_atom2_value;
     function $mol_mem_persist() {
         const atom = $.$mol_atom2.current;
+        if (!atom)
+            return;
         if (atom.hasOwnProperty('destructor'))
             return;
         atom.destructor = () => { };
@@ -3494,7 +3495,7 @@ var $;
                 var _a;
                 if (next === undefined && store.has(this))
                     return store.get(this);
-                const val = (_a = task.call(this, next), (_a !== null && _a !== void 0 ? _a : next));
+                const val = (_a = task.call(this, next)) !== null && _a !== void 0 ? _a : next;
                 store.set(this, val);
                 return val;
             };
@@ -6771,7 +6772,7 @@ var $;
     ], $hyoo_github_compare_project.prototype, "Capacity", null);
     $.$hyoo_github_compare_project = $hyoo_github_compare_project;
 })($ || ($ = {}));
-//issues.view.tree.js.map
+//compare.view.tree.js.map
 ;
 "use strict";
 var $;
@@ -6884,13 +6885,13 @@ var $;
         $$.$hyoo_github_compare_project = $hyoo_github_compare_project;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-//issues.view.js.map
+//compare.view.js.map
 ;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("hyoo/github/compare/issues.view.css", "[hyoo_github_compare_body] {\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n[hyoo_github_compare_projects] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_github_compare_project] {\n\tflex: 1 1 14rem;\n}\n\n[hyoo_github_compare_project_input] {\n\tdisplay: flex;\n}\n\n[hyoo_github_compare_project_id] {\n\tfont-weight: bold;\n}\n\n[hyoo_github_compare_project_capacity] {\n\tdisplay: block;\n\tpadding: 1rem;\n\tfont-size: 2rem;\n\tline-height: 1;\n}\n\n[hyoo_github_compare_chart] {\n\tflex: 1 0 10rem;\n\tmargin: 0 0.5rem;\n}\n\n[hyoo_github_compare_description] {\n\tpadding: 1rem;\n}\n");
+    $.$mol_style_attach("hyoo/github/compare/compare.view.css", "[hyoo_github_compare_body] {\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n[hyoo_github_compare_projects] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_github_compare_project] {\n\tflex: 1 1 14rem;\n}\n\n[hyoo_github_compare_project_input] {\n\tdisplay: flex;\n}\n\n[hyoo_github_compare_project_id] {\n\tfont-weight: bold;\n}\n\n[hyoo_github_compare_project_capacity] {\n\tdisplay: block;\n\tpadding: 1rem;\n\tfont-size: 2rem;\n\tline-height: 1;\n}\n\n[hyoo_github_compare_chart] {\n\tflex: 1 0 10rem;\n\tmargin: 0 0.5rem;\n}\n\n[hyoo_github_compare_description] {\n\tpadding: 1rem;\n}\n");
 })($ || ($ = {}));
-//issues.view.css.js.map
+//compare.view.css.js.map
 
 //# sourceMappingURL=web.js.map

@@ -33,13 +33,19 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_object2 extends Object {
+    type $mol_type_writable<T> = {
+        -readonly [P in keyof T]: T[P];
+    };
+}
+
+declare namespace $ {
+    class $mol_object2 {
         static $: $mol_ambient_context;
         [$mol_ambient_ref]: $mol_ambient_context;
         get $(): $mol_ambient_context;
         set $(next: $mol_ambient_context);
         constructor(init?: (obj: any) => void);
-        static create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: Instance) => void): Instance;
+        static create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: $mol_type_writable<Instance>) => void): Instance;
         static toString(): any;
         destructor(): void;
         toString(): any;
@@ -169,6 +175,10 @@ declare namespace $ {
     function $mol_conform_handler<Class>(cl: {
         new (...args: any[]): Class;
     }, handler: (target: Class, source: Class) => Class): void;
+    function $mol_conform_array<Value, List extends {
+        [index: number]: Value;
+        length: number;
+    }>(target: List, source: List): List;
 }
 
 declare namespace $ {
@@ -381,7 +391,7 @@ declare namespace $ {
         stream(): ReadableStream<Uint8Array>;
         text(): string;
         json(): any;
-        buffer(): any;
+        buffer(): ArrayBuffer;
         xml(): Document;
         xhtml(): Document;
         html(): Document;
@@ -689,6 +699,7 @@ declare namespace $ {
         sub(): readonly (string | number | boolean | Node | $mol_view)[];
         sub_visible(): readonly (string | number | boolean | Node | $mol_view)[];
         minimal_width(): number;
+        maximal_width(): number;
         minimal_height(): number;
         static watchers: Set<$mol_view>;
         view_rect(): ClientRect;
@@ -747,9 +758,92 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    type $mol_style_properties = CSSStyleDeclaration & {
-        webkitOverflowScrolling: 'auto' | 'touch';
+    type $mol_type_partial_deep<Val> = {
+        [field in keyof Val]?: $mol_type_partial_deep<Val[field]>;
     };
+}
+
+declare namespace $ {
+    type $mol_type_override<Base, Over> = Omit<Base, keyof Over> & Over;
+}
+
+declare namespace $ {
+    class $mol_decor<Value> {
+        readonly value: Value;
+        constructor(value: Value);
+        prefix(): string;
+        valueOf(): Value;
+        postfix(): string;
+        toString(): string;
+    }
+}
+
+declare namespace $ {
+    type $mol_style_unit_length = '%' | 'px' | 'cm' | 'mm' | 'Q' | 'in' | 'pc' | 'pt' | 'cap' | 'ch' | 'em' | 'rem' | 'ex' | 'ic' | 'lh' | 'rlh' | 'vh' | 'vw' | 'vi' | 'vb' | 'vmin' | 'vmax';
+    class $mol_style_unit<Literal extends $mol_style_unit_length> extends $mol_decor<number> {
+        readonly literal: Literal;
+        constructor(value: number, literal: Literal);
+        postfix(): Literal;
+        static per(value: number): $mol_style_unit<"%">;
+        static px(value: number): $mol_style_unit<"px">;
+        static mm(value: number): $mol_style_unit<"mm">;
+        static cm(value: number): $mol_style_unit<"cm">;
+        static Q(value: number): $mol_style_unit<"Q">;
+        static in(value: number): $mol_style_unit<"in">;
+        static pc(value: number): $mol_style_unit<"pc">;
+        static pt(value: number): $mol_style_unit<"pt">;
+        static cap(value: number): $mol_style_unit<"cap">;
+        static ch(value: number): $mol_style_unit<"ch">;
+        static em(value: number): $mol_style_unit<"em">;
+        static rem(value: number): $mol_style_unit<"rem">;
+        static ex(value: number): $mol_style_unit<"ex">;
+        static ic(value: number): $mol_style_unit<"ic">;
+        static lh(value: number): $mol_style_unit<"lh">;
+        static rlh(value: number): $mol_style_unit<"rlh">;
+        static vh(value: number): $mol_style_unit<"vh">;
+        static vw(value: number): $mol_style_unit<"vw">;
+        static vi(value: number): $mol_style_unit<"vi">;
+        static vb(value: number): $mol_style_unit<"vb">;
+        static vmin(value: number): $mol_style_unit<"vmin">;
+        static vmax(value: number): $mol_style_unit<"vmax">;
+    }
+}
+
+declare namespace $ {
+    type $mol_style_func_name = 'calc' | 'fit-content';
+    class $mol_style_func<Name extends $mol_style_func_name, Value = unknown> extends $mol_decor<Value> {
+        readonly name: Name;
+        constructor(value: Value, name: Name);
+        prefix(): string;
+        postfix(): string;
+        static calc<Value>(value: Value): $mol_style_func<"calc", Value>;
+        static fit_content(value: number | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<'calc'>): $mol_style_func<"fit-content", number | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<"calc", unknown>>;
+    }
+}
+
+declare namespace $ {
+    export type $mol_style_properties = $mol_type_override<CSSStyleDeclaration, Overrides>;
+    type Common = 'inherit' | 'initial' | 'unset';
+    type Length = number | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<'calc'>;
+    type Size = 'auto' | 'max-content' | 'min-content' | $mol_style_func<'fit-content'> | Length | Common;
+    type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common;
+    interface Overrides {
+        alignContent: 'baseline' | 'start' | 'end' | 'flex-start' | 'flex-end' | 'center' | 'normal' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | ['first' | 'last', 'baseline'] | ['safe' | 'unsafe', 'start' | 'end' | 'flex-start' | 'flex-end'] | Common;
+        display: 'block' | 'inline' | 'run-in' | 'list-item' | 'none' | 'flow' | 'flow-root' | 'table' | 'flex' | 'grid' | 'contents' | 'table-row-group' | 'table-header-group' | 'table-footer-group' | 'table-column-group' | 'table-row' | 'table-cell' | 'table-column' | 'table-caption' | 'inline-block' | 'inline-table' | 'inline-flex' | 'inline-grid' | 'ruby' | 'ruby-base' | 'ruby-text' | 'ruby-base-container' | 'ruby-text-container' | Common;
+        overflow: Overflow | {
+            x: Overflow;
+            y: Overflow;
+        };
+        webkitOverflowScrolling: 'auto' | 'touch';
+        width: Size;
+        height: Size;
+        flex: {
+            grow: number | Common;
+            shrink: number | Common;
+            basis: Size;
+        };
+    }
+    export {};
 }
 
 declare namespace $ {
@@ -775,7 +869,7 @@ declare namespace $ {
     type Views<Obj extends $mol_view> = {
         [key in $mol_view_all]: $mol_style_definition<Obj>;
     };
-    export type $mol_style_definition<Obj extends $mol_view> = Partial<$mol_style_properties & Pseudos<Obj> & Attrs<Obj> & Medias<Obj> & Kids<Obj> & Elements<Obj> & Views<Obj>>;
+    export type $mol_style_definition<Obj extends $mol_view> = $mol_type_partial_deep<$mol_style_properties & Pseudos<Obj> & Attrs<Obj> & Medias<Obj> & Kids<Obj> & Elements<Obj> & Views<Obj>>;
     export {};
 }
 
@@ -1044,28 +1138,88 @@ declare namespace $ {
     }
 }
 
-/// <reference types="node" />
 declare namespace $ {
-    class $mol_file extends $mol_object {
+    function $mol_base64_decode(base64: string): Uint8Array;
+}
+
+declare namespace $ {
+    function $mol_base64_decode_node(base64Str: string): Uint8Array;
+}
+
+declare namespace $ {
+    function $mol_base64_encode(src: string | Uint8Array): string;
+}
+
+declare namespace $ {
+    function $mol_base64_encode_node(str: string | Uint8Array): string;
+}
+
+declare namespace $ {
+    type $mol_buffer_encoding = 'utf8' | 'base64';
+    type $mol_buffer_encoding_full = $mol_buffer_encoding | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr' | 'utf-16be' | 'utf-16le' | 'x-user-defined' | 'replacement';
+    class $mol_buffer extends $mol_object2 {
+        original: Uint8Array;
+        get length(): number;
+        static from(value: string | Uint8Array, code?: $mol_buffer_encoding): $mol_buffer;
+        toString(code?: $mol_buffer_encoding_full): string;
+    }
+}
+
+declare namespace $ {
+    type $mol_file_type = 'file' | 'dir' | 'link';
+    type $mol_file_content = string | $mol_buffer | Uint8Array;
+    interface $mol_file_stat {
+        type: $mol_file_type;
+        size: number;
+        atime: Date;
+        mtime: Date;
+        ctime: Date;
+    }
+    class $mol_file_not_found extends Error {
+    }
+    abstract class $mol_file extends $mol_object {
         static absolute(path: string): $mol_file;
         static relative(path: string): $mol_file;
         path(): string;
-        watcher(): import("chokidar").FSWatcher;
-        stat(next?: any, force?: $mol_mem_force): any;
-        version(): any;
-        exists(next?: boolean): boolean;
         parent(): $mol_file;
-        type(): "dir" | "link" | "file" | "blocks" | "chars" | "fifo" | "socket";
+        abstract stat(next?: $mol_file_stat, force?: $mol_mem_force): $mol_file_stat;
+        reset(): void;
+        version(): string;
+        abstract ensure(next?: boolean): boolean;
+        abstract watcher(): {
+            destructor(): void;
+        };
+        exists(next?: boolean): boolean;
+        type(): $mol_file_type;
         name(): string;
         ext(): string;
-        content(next?: string | Buffer, force?: $mol_mem_force): string | Buffer;
-        reader(): import("fs").ReadStream;
-        writer(): import("fs").WriteStream;
+        abstract buffer(next?: $mol_buffer, force?: $mol_mem_force): $mol_buffer;
+        text(next?: string, force?: $mol_mem_force): string;
+        fail(error: Error): void;
+        buffer_cached(buffer: $mol_buffer): void;
+        text_cached(content: string): void;
+        abstract sub(): $mol_file[];
+        abstract resolve(path: string): $mol_file;
+        abstract relate(base?: $mol_file): string;
+        abstract append(next: $mol_file_content): void;
+        find(include?: RegExp, exclude?: RegExp): $mol_file[];
+    }
+}
+
+declare namespace $ {
+    class $mol_file_node extends $mol_file {
+        static absolute(path: string): $mol_file_node;
+        static relative(path: string): $mol_file_node;
+        watcher(): {
+            destructor(): void;
+        };
+        stat(next?: $mol_file_stat, force?: $mol_mem_force): $mol_file_stat;
+        ensure(next?: boolean): boolean;
+        buffer(next?: $mol_buffer, force?: $mol_mem_force): $mol_buffer;
         sub(): $mol_file[];
         resolve(path: string): $mol_file;
         relate(base?: $mol_file): string;
-        append(next: string): void;
-        find(include?: RegExp, exclude?: RegExp): $mol_file[];
+        append(next: $mol_file_content): void;
     }
 }
 

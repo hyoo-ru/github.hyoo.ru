@@ -5,6 +5,7 @@ void function( module ) { var exports = module.exports = this; function require(
 ;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+Error.stackTraceLimit = Infinity;
 module.exports;
 //mol.js.map
 ;
@@ -116,12 +117,14 @@ var $;
 //owning.js.map
 ;
 "use strict";
+//writable.js.map
+;
+"use strict";
 var $;
 (function ($) {
     var _a;
-    class $mol_object2 extends Object {
+    class $mol_object2 {
         constructor(init) {
-            super();
             this[_a] = null;
             if (init)
                 init(this);
@@ -615,6 +618,7 @@ var $;
         }
         return source;
     }
+    $.$mol_conform_array = $mol_conform_array;
     $mol_conform_handler(Array, $mol_conform_array);
     $mol_conform_handler(Uint8Array, $mol_conform_array);
     $mol_conform_handler(Uint16Array, $mol_conform_array);
@@ -2075,7 +2079,7 @@ var $;
             if (typeof config === 'number')
                 config = new Date(config);
             if (typeof config === 'string') {
-                var parsed = /^(?:(\d\d\d\d)(?:-?(\d\d)(?:-?(\d\d))?)?)?(?:[T ](\d\d)(?::?(\d\d)(?::?(\d\d(?:\.\d+)?))?)?(Z|[\+\-]\d\d(?::?(?:\d\d)?)?)?)?$/.exec(config);
+                const parsed = /^(?:(\d\d\d\d)(?:-?(\d\d)(?:-?(\d\d))?)?)?(?:[T ](\d\d)(?::?(\d\d)(?::?(\d\d(?:\.\d+)?))?)?(Z|[\+\-]\d\d(?::?(?:\d\d)?)?)?)?$/.exec(config);
                 if (!parsed)
                     throw new Error(`Can not parse time moment (${config})`);
                 if (parsed[1])
@@ -2101,7 +2105,7 @@ var $;
                 this.hour = config.getHours();
                 this.minute = config.getMinutes();
                 this.second = config.getSeconds() + config.getMilliseconds() / 1000;
-                var offset = -config.getTimezoneOffset();
+                const offset = -config.getTimezoneOffset();
                 this.offset = new $.$mol_time_duration({
                     hour: (offset < 0) ? Math.ceil(offset / 60) : Math.floor(offset / 60),
                     minute: offset % 60
@@ -2114,61 +2118,77 @@ var $;
             this.hour = config.hour;
             this.minute = config.minute;
             this.second = config.second;
-            this.offset = config.offset && new $.$mol_time_duration(config.offset);
+            this.offset = config.offset == null ? config.offset : new $.$mol_time_duration(config.offset);
         }
         get weekday() {
             return (this.native.getDay() + 6) % 7;
         }
         get native() {
+            var _a, _b, _c, _d, _e;
             if (this._native)
                 return this._native;
-            var utc = this.toOffset('Z');
-            return this._native = new Date(Date.UTC((utc.year || 0), (utc.month || 0), (utc.day || 0) + 1, (utc.hour || 0), (utc.minute || 0), (utc.second && Math.floor(utc.second) || 0), (utc.second && Math.floor((utc.second - Math.floor(utc.second)) * 1000) || 0)));
+            const utc = this.toOffset('Z');
+            return this._native = new Date(Date.UTC((_a = utc.year) !== null && _a !== void 0 ? _a : 0, (_b = utc.month) !== null && _b !== void 0 ? _b : 0, ((_c = utc.day) !== null && _c !== void 0 ? _c : 0) + 1, (_d = utc.hour) !== null && _d !== void 0 ? _d : 0, (_e = utc.minute) !== null && _e !== void 0 ? _e : 0, utc.second != undefined ? Math.floor(utc.second) : 0, utc.second != undefined ? Math.floor((utc.second - Math.floor(utc.second)) * 1000) : 0));
         }
         get normal() {
             if (this._normal)
                 return this._normal;
             const moment = new $mol_time_moment(this.native);
             return this._normal = new $mol_time_moment({
-                year: (this.year === undefined) ? undefined : moment.year,
-                month: (this.month === undefined) ? undefined : moment.month,
-                day: (this.day === undefined) ? undefined : moment.day,
-                hour: (this.hour === undefined) ? undefined : moment.hour,
-                minute: (this.minute === undefined) ? undefined : moment.minute,
-                second: (this.second === undefined) ? undefined : moment.second,
-                offset: (this.offset === undefined) ? undefined : moment.offset,
+                year: this.year === undefined ? undefined : moment.year,
+                month: this.month === undefined ? undefined : moment.month,
+                day: this.day === undefined ? undefined : moment.day,
+                hour: this.hour === undefined ? undefined : moment.hour,
+                minute: this.minute === undefined ? undefined : moment.minute,
+                second: this.second === undefined ? undefined : moment.second,
+                offset: this.offset === undefined ? undefined : moment.offset,
             });
         }
         merge(config) {
-            var moment = new $mol_time_moment(config);
+            const moment = new $mol_time_moment(config);
             return new $mol_time_moment({
-                year: (moment.year === undefined) ? this.year : moment.year,
-                month: (moment.month === undefined) ? this.month : moment.month,
-                day: (moment.day === undefined) ? this.day : moment.day,
-                hour: (moment.hour === undefined) ? this.hour : moment.hour,
-                minute: (moment.minute === undefined) ? this.minute : moment.minute,
-                second: (moment.second === undefined) ? this.second : moment.second,
-                offset: (moment.offset === undefined) ? this.offset : moment.offset,
+                year: moment.year === undefined ? this.year : moment.year,
+                month: moment.month === undefined ? this.month : moment.month,
+                day: moment.day === undefined ? this.day : moment.day,
+                hour: moment.hour === undefined ? this.hour : moment.hour,
+                minute: moment.minute === undefined ? this.minute : moment.minute,
+                second: moment.second === undefined ? this.second : moment.second,
+                offset: moment.offset === undefined ? this.offset : moment.offset,
             });
         }
         shift(config) {
-            var duration = new $.$mol_time_duration(config);
-            var moment = new $mol_time_moment().merge(this);
-            var second = (moment.second) + (duration.second || 0);
-            var native = new Date((moment.year) + (duration.year || 0), (moment.month) + (duration.month || 0), (moment.day) + 1 + (duration.day || 0), (moment.hour) + (duration.hour || 0), (moment.minute) + (duration.minute || 0), Math.floor(second), (second - Math.floor(second)) * 1000);
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+            const duration = new $.$mol_time_duration(config);
+            const moment = new $mol_time_moment().merge({
+                year: this.year,
+                month: this.month,
+                day: this.day,
+                hour: (_a = this.hour) !== null && _a !== void 0 ? _a : 0,
+                minute: (_b = this.minute) !== null && _b !== void 0 ? _b : 0,
+                second: (_c = this.second) !== null && _c !== void 0 ? _c : 0,
+                offset: (_d = this.offset) !== null && _d !== void 0 ? _d : 0
+            });
+            const second = moment.second + ((_e = duration.second) !== null && _e !== void 0 ? _e : 0);
+            const native = new Date(moment.year + ((_f = duration.year) !== null && _f !== void 0 ? _f : 0), moment.month + ((_g = duration.month) !== null && _g !== void 0 ? _g : 0), moment.day + 1 + ((_h = duration.day) !== null && _h !== void 0 ? _h : 0), moment.hour + ((_j = duration.hour) !== null && _j !== void 0 ? _j : 0), moment.minute + ((_k = duration.minute) !== null && _k !== void 0 ? _k : 0), Math.floor(second), (second - Math.floor(second)) * 1000);
             if (isNaN(native.valueOf()))
                 throw new Error('Wrong time');
             return new $mol_time_moment({
-                year: (this.year === undefined) ? undefined : native.getFullYear(),
-                month: (this.month === undefined) ? undefined : native.getMonth(),
-                day: (this.day === undefined) ? undefined : native.getDate() - 1,
-                hour: (this.hour === undefined) ? undefined : native.getHours(),
-                minute: (this.minute === undefined) ? undefined : native.getMinutes(),
-                second: (this.second === undefined) ? undefined : native.getSeconds() + native.getMilliseconds() / 1000,
+                year: this.year === undefined ? undefined : native.getFullYear(),
+                month: this.month === undefined ? undefined : native.getMonth(),
+                day: this.day === undefined ? undefined : native.getDate() - 1,
+                hour: this.hour === undefined ? undefined : native.getHours(),
+                minute: this.minute === undefined ? undefined : native.getMinutes(),
+                second: this.second === undefined ? undefined : native.getSeconds() + native.getMilliseconds() / 1000,
                 offset: this.offset,
             });
         }
         toOffset(config) {
+            if (this.hour === undefined)
+                return this;
+            if (this.minute === undefined)
+                return this;
+            if (this.second === undefined)
+                return this;
             const duration = new $.$mol_time_duration(config);
             const offset = this.offset || new $mol_time_moment().offset;
             const moment = this.shift(duration.summ(offset.mult(-1)));
@@ -2226,7 +2246,7 @@ var $;
         'MM': (moment) => {
             if (moment.month == null)
                 return '';
-            var month = moment.month + 1;
+            const month = moment.month + 1;
             return (month < 10)
                 ? ('0' + month)
                 : ('' + month);
@@ -2254,7 +2274,7 @@ var $;
         'DD': (moment) => {
             if (moment.day == null)
                 return '';
-            var day = moment.day + 1;
+            const day = moment.day + 1;
             return (day < 10)
                 ? ('0' + day)
                 : String(day);
@@ -2306,7 +2326,7 @@ var $;
         'ss': (moment) => {
             if (moment.second == null)
                 return '';
-            var second = Math.floor(moment.second);
+            const second = Math.floor(moment.second);
             return (second < 10)
                 ? ('0' + second)
                 : String(second);
@@ -2326,7 +2346,7 @@ var $;
         'sss': (moment) => {
             if (moment.second == null)
                 return '';
-            var millisecond = Math.floor((moment.second - Math.floor(moment.second)) * 1000);
+            const millisecond = Math.floor((moment.second - Math.floor(moment.second)) * 1000);
             return (millisecond < 10)
                 ? ('00' + millisecond)
                 : (millisecond < 100)
@@ -2334,7 +2354,7 @@ var $;
                     : String(millisecond);
         },
         'Z': (moment) => {
-            var offset = moment.offset;
+            const offset = moment.offset;
             if (!offset)
                 return '';
             return offset.toString('+hh:mm');
@@ -2619,8 +2639,8 @@ var $;
             this.focused([event.target]);
         }
         static blur(event) {
-            const element = $.$mol_mem_cached(() => this.focused())[0];
-            if (element === event.target)
+            const elements = $.$mol_mem_cached(() => this.focused());
+            if (elements && elements[0] === event.target)
                 this.focused([]);
         }
     }
@@ -2912,7 +2932,7 @@ var $;
             return this.$.$mol_view_state_key(suffix);
         }
         dom_name() {
-            return this.constructor.toString().replace('$', '') || 'div';
+            return this.constructor.toString().replace('$', '').replace(/^(?=\d+)/, '_') || 'div';
         }
         dom_name_space() { return 'http://www.w3.org/1999/xhtml'; }
         sub() {
@@ -2932,6 +2952,9 @@ var $;
                 }
             });
             return min;
+        }
+        maximal_width() {
+            return this.minimal_width();
         }
         minimal_height() {
             let min = 0;
@@ -3188,6 +3211,89 @@ var $;
 //element.js.map
 ;
 "use strict";
+//deep.js.map
+;
+"use strict";
+//override.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_decor {
+        constructor(value) {
+            this.value = value;
+        }
+        prefix() { return ''; }
+        valueOf() { return this.value; }
+        postfix() { return ''; }
+        toString() {
+            return `${this.prefix()}${this.valueOf()}${this.postfix()}`;
+        }
+    }
+    $.$mol_decor = $mol_decor;
+})($ || ($ = {}));
+//decor.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_style_unit extends $.$mol_decor {
+        constructor(value, literal) {
+            super(value);
+            this.literal = literal;
+        }
+        postfix() {
+            return this.literal;
+        }
+        static per(value) { return new $mol_style_unit(value, '%'); }
+        static px(value) { return new $mol_style_unit(value, 'px'); }
+        static mm(value) { return new $mol_style_unit(value, 'mm'); }
+        static cm(value) { return new $mol_style_unit(value, 'cm'); }
+        static Q(value) { return new $mol_style_unit(value, 'Q'); }
+        static in(value) { return new $mol_style_unit(value, 'in'); }
+        static pc(value) { return new $mol_style_unit(value, 'pc'); }
+        static pt(value) { return new $mol_style_unit(value, 'pt'); }
+        static cap(value) { return new $mol_style_unit(value, 'cap'); }
+        static ch(value) { return new $mol_style_unit(value, 'ch'); }
+        static em(value) { return new $mol_style_unit(value, 'em'); }
+        static rem(value) { return new $mol_style_unit(value, 'rem'); }
+        static ex(value) { return new $mol_style_unit(value, 'ex'); }
+        static ic(value) { return new $mol_style_unit(value, 'ic'); }
+        static lh(value) { return new $mol_style_unit(value, 'lh'); }
+        static rlh(value) { return new $mol_style_unit(value, 'rlh'); }
+        static vh(value) { return new $mol_style_unit(value, 'vh'); }
+        static vw(value) { return new $mol_style_unit(value, 'vw'); }
+        static vi(value) { return new $mol_style_unit(value, 'vi'); }
+        static vb(value) { return new $mol_style_unit(value, 'vb'); }
+        static vmin(value) { return new $mol_style_unit(value, 'vmin'); }
+        static vmax(value) { return new $mol_style_unit(value, 'vmax'); }
+    }
+    $.$mol_style_unit = $mol_style_unit;
+})($ || ($ = {}));
+//unit.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_style_func extends $.$mol_decor {
+        constructor(value, name) {
+            super(value);
+            this.name = name;
+        }
+        prefix() { return this.name + '('; }
+        postfix() { return ')'; }
+        static calc(value) {
+            return new $mol_style_func(value, 'calc');
+        }
+        static fit_content(value) {
+            return new $mol_style_func(value, 'fit-content');
+        }
+    }
+    $.$mol_style_func = $mol_style_func;
+})($ || ($ = {}));
+//func.js.map
+;
+"use strict";
 //properties.js.map
 ;
 "use strict";
@@ -3198,24 +3304,32 @@ var $;
 (function ($) {
     function $mol_style_sheet(Component, config) {
         let rules = [];
+        const qname = (name) => name.replace('$', '').replace(/^(?=\d+)/, '_');
         const make_class = (prefix, suffix, config) => {
             const props = [];
             for (const key of Object.keys(config).reverse()) {
                 if (/^[a-z]/.test(key)) {
                     const name = key.replace(/[A-Z]/g, letter => '-' + letter.toLowerCase());
                     const val = config[key];
-                    props.push(`\t${name}: ${val};\n`);
+                    if (val.constructor === Object) {
+                        for (let suffix in val) {
+                            props.push(`\t${name}-${suffix}: ${val[suffix]};\n`);
+                        }
+                    }
+                    else {
+                        props.push(`\t${name}: ${val};\n`);
+                    }
                 }
                 else if (/^[A-Z]/.test(key)) {
                     make_class(prefix + '_' + key.toLowerCase(), suffix, config[key]);
                 }
                 else if (key[0] === '$') {
-                    make_class(prefix + '] ' + key.replace('$', '['), suffix, config[key]);
+                    make_class(prefix + '] [' + qname(key), suffix, config[key]);
                 }
                 else if (key === '>') {
                     const types = config[key];
                     for (let type in types) {
-                        make_class(prefix + '] > ' + type.replace('$', '['), suffix, types[type]);
+                        make_class(prefix + '] > [' + qname(type), suffix, types[type]);
                     }
                 }
                 else if (key === '@') {
@@ -3242,7 +3356,7 @@ var $;
                 rules.push(`${prefix}${suffix} {\n${props.reverse().join('')}}\n`);
             }
         };
-        make_class(Component.name.replace('$', '['), ']', config);
+        make_class('[' + qname(Component.name), ']', config);
         return rules.reverse().join('');
     }
     $.$mol_style_sheet = $mol_style_sheet;
@@ -3594,7 +3708,11 @@ var $;
         $.$mol_style_define($$.$mol_scroll, {
             display: 'block',
             overflow: 'auto',
-            flex: '1 1 auto',
+            flex: {
+                grow: 1,
+                shrink: 1,
+                basis: 'auto',
+            },
             alignSelf: 'stretch',
             boxSizing: 'border-box',
             willChange: 'scroll-position',
@@ -3619,8 +3737,8 @@ var $;
             '@media': {
                 'print': {
                     overflow: 'visible',
-                }
-            }
+                },
+            },
         });
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -3742,7 +3860,11 @@ var $;
             display: 'flex',
             margin: '0',
             flexDirection: 'column',
-            flex: '1 1 auto',
+            flex: {
+                grow: 1,
+                shrink: 1,
+                basis: 'auto',
+            },
             position: 'relative',
             alignSelf: 'stretch',
             maxWidth: '100%',
@@ -3760,14 +3882,22 @@ var $;
                 display: 'flex',
                 flexWrap: 'wrap',
                 justifyContent: 'space-between',
-                flex: '0 0 auto',
+                flex: {
+                    grow: 0,
+                    shrink: 0,
+                    basis: 'auto',
+                },
                 position: 'relative',
                 margin: '0',
                 minHeight: 'calc( 1.5em + 2rem )',
                 padding: '.5rem',
             },
             Title: {
-                flex: '1000 1 50%',
+                flex: {
+                    grow: 1000,
+                    shrink: 1,
+                    basis: $.$mol_style_unit.per(50),
+                },
                 padding: '.5rem',
                 wordBreak: 'normal',
                 cursor: 'default',
@@ -3776,7 +3906,11 @@ var $;
                 },
             },
             Tools: {
-                flex: '1 1 auto',
+                flex: {
+                    grow: 1,
+                    shrink: 1,
+                    basis: 'auto',
+                },
                 display: 'flex',
                 justifyContent: 'flex-end',
                 ':empty': {
@@ -3784,16 +3918,24 @@ var $;
                 },
             },
             Body: {
-                flex: '1000 1 100%',
+                flex: {
+                    grow: 1000,
+                    shrink: 1,
+                    basis: $.$mol_style_unit.per(100),
+                },
                 margin: '0',
             },
             Foot: {
                 display: 'flex',
                 justifyContent: 'space-between',
-                flex: '0 0 auto',
+                flex: {
+                    grow: 0,
+                    shrink: 0,
+                    basis: 'auto',
+                },
                 margin: '0',
                 overflow: 'hidden',
-            }
+            },
         });
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -3864,14 +4006,102 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_file extends $.$mol_object {
-        static absolute(path) {
-            return $mol_file.make({
-                path: $.$mol_const(path)
+    function $mol_base64_decode(base64) {
+        throw new Error('Not implemented');
+    }
+    $.$mol_base64_decode = $mol_base64_decode;
+})($ || ($ = {}));
+//decode.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_decode_web(base64Str) {
+        return new Uint8Array($.$mol_dom_context.atob(base64Str).split('').map(c => c.charCodeAt(0)));
+    }
+    $.$mol_base64_decode_web = $mol_base64_decode_web;
+    $.$mol_base64_decode = $mol_base64_decode_web;
+})($ || ($ = {}));
+//decode.web.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_encode(src) {
+        throw new Error('Not implemented');
+    }
+    $.$mol_base64_encode = $mol_base64_encode;
+})($ || ($ = {}));
+//encode.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function binary_string(bytes) {
+        let binary = '';
+        if (typeof bytes !== 'string') {
+            for (const byte of bytes)
+                binary += String.fromCharCode(byte);
+        }
+        else {
+            binary = unescape(encodeURIComponent(bytes));
+        }
+        return binary;
+    }
+    function $mol_base64_encode_web(str) {
+        return $.$mol_dom_context.btoa(binary_string(str));
+    }
+    $.$mol_base64_encode_web = $mol_base64_encode_web;
+    $.$mol_base64_encode = $mol_base64_encode_web;
+})($ || ($ = {}));
+//encode.web.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    const encoder = new TextEncoder();
+    class $mol_buffer extends $.$mol_object2 {
+        get length() {
+            return this.original.length;
+        }
+        static from(value, code = 'utf8') {
+            return $mol_buffer.create(t => {
+                if (typeof value === 'string') {
+                    if (code === 'base64')
+                        t.original = $.$mol_base64_decode(value);
+                    else
+                        t.original = encoder.encode(value);
+                }
+                else
+                    t.original = value;
             });
         }
+        toString(code = 'utf8') {
+            if (code === 'base64')
+                return $.$mol_base64_encode(this.original);
+            return new TextDecoder(code).decode(this.original);
+        }
+    }
+    $.$mol_buffer = $mol_buffer;
+    $.$mol_conform_handler($mol_buffer, (target, source) => {
+        const original = $.$mol_conform_array(target.original, source.original);
+        return original !== source.original ? target : source;
+    });
+})($ || ($ = {}));
+//buffer.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_file_not_found extends Error {
+    }
+    $.$mol_file_not_found = $mol_file_not_found;
+    class $mol_file extends $.$mol_object {
+        static absolute(path) {
+            throw new Error('Not implemented yet');
+        }
         static relative(path) {
-            return this.absolute(new URL(path, this.base).toString());
+            throw new Error('Not implemented yet');
         }
         path() {
             return '.';
@@ -3879,15 +4109,135 @@ var $;
         parent() {
             return this.resolve('..');
         }
+        reset() {
+            try {
+                this.stat(undefined, $.$mol_mem_force_cache);
+            }
+            catch (error) {
+                if (error instanceof $mol_file_not_found)
+                    return;
+                return $.$mol_fail_hidden(error);
+            }
+        }
+        version() {
+            return this.stat().mtime.getTime().toString(36).toUpperCase();
+        }
+        exists(next) {
+            let exists = true;
+            try {
+                this.stat();
+            }
+            catch (error) {
+                if (error instanceof $mol_file_not_found)
+                    exists = false;
+                else
+                    return $.$mol_fail_hidden(error);
+            }
+            if (next === undefined)
+                return exists;
+            if (next === exists)
+                return exists;
+            if (next)
+                this.parent().exists(true);
+            this.ensure(next);
+            this.reset();
+            return next;
+        }
+        type() {
+            return this.stat().type;
+        }
         name() {
             return this.path().replace(/^.*\//, '');
         }
         ext() {
-            var match = /((?:\.\w+)+)$/.exec(this.path());
-            return match && match[1].substring(1);
+            const match = /((?:\.\w+)+)$/.exec(this.path());
+            return match ? match[1].substring(1) : '';
         }
-        content(next, force) {
-            return $.$mol_fetch.text(this.path());
+        text(next, force) {
+            return this.buffer(next === undefined ? undefined : $.$mol_buffer.from(next), force).toString();
+        }
+        fail(error) {
+            this.buffer(error, $.$mol_mem_force_fail);
+            this.stat(error, $.$mol_mem_force_fail);
+        }
+        buffer_cached(buffer) {
+            const ctime = new Date();
+            const stat = {
+                type: 'file',
+                size: buffer.length,
+                ctime,
+                atime: ctime,
+                mtime: ctime
+            };
+            this.buffer(buffer, $.$mol_mem_force_cache);
+            this.stat(stat, $.$mol_mem_force_cache);
+        }
+        text_cached(content) {
+            this.buffer_cached($.$mol_buffer.from(content));
+        }
+        find(include, exclude) {
+            const found = [];
+            const sub = this.sub();
+            for (const child of sub) {
+                const child_path = child.path();
+                if (exclude && child_path.match(exclude))
+                    continue;
+                if (!include || child_path.match(include))
+                    found.push(child);
+                if (child.type() === 'dir') {
+                    const sub_child = child.find(include, exclude);
+                    for (const child of sub_child)
+                        found.push(child);
+                }
+            }
+            return found;
+        }
+    }
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_file, "absolute", null);
+    $.$mol_file = $mol_file;
+})($ || ($ = {}));
+//file.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_file_web extends $.$mol_file {
+        static absolute(path) {
+            return this.make({
+                path: $.$mol_const(path)
+            });
+        }
+        static relative(path) {
+            return this.absolute(new URL(path, this.base).toString());
+        }
+        buffer(next, force) {
+            if (next !== undefined)
+                throw new Error(`Saving content not supported: ${this.path}`);
+            const response = $.$mol_fetch.response(this.path());
+            if (response.native.status === 404)
+                throw new $.$mol_file_not_found(`File not found: ${this.path()}`);
+            return $.$mol_buffer.from(new Uint8Array(response.buffer()));
+        }
+        watcher() {
+            throw new Error('$mol_file_web.watcher() not implemented');
+        }
+        stat(next, force) {
+            let stat = next;
+            if (next === undefined) {
+                const content = this.text();
+                const ctime = new Date();
+                stat = {
+                    type: 'file',
+                    size: content.length,
+                    ctime,
+                    atime: ctime,
+                    mtime: ctime
+                };
+            }
+            this.parent().watcher();
+            return stat;
         }
         resolve(path) {
             let res = this.path() + '/' + path;
@@ -3899,20 +4249,36 @@ var $;
             }
             return this.constructor.absolute(res);
         }
+        ensure(next) {
+            throw new Error('$mol_file_web.ensure() not implemented');
+        }
+        sub() {
+            throw new Error('$mol_file_web.sub() not implemented');
+        }
         relate(base = this.constructor.relative('.')) {
-            throw new Error('Not implemented yet');
+            throw new Error('$mol_file_web.relate() not implemented');
+        }
+        append(next) {
+            throw new Error('$mol_file_web.append() not implemented');
         }
     }
-    $mol_file.base = $.$mol_dom_context.document
+    $mol_file_web.base = $.$mol_dom_context.document
         ? new URL('.', $.$mol_dom_context.document.currentScript['src']).toString()
         : '';
     __decorate([
         $.$mol_mem
-    ], $mol_file.prototype, "content", null);
+    ], $mol_file_web.prototype, "buffer", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_file_web.prototype, "stat", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_file_web.prototype, "sub", null);
     __decorate([
         $.$mol_mem_key
-    ], $mol_file, "absolute", null);
-    $.$mol_file = $mol_file;
+    ], $mol_file_web, "absolute", null);
+    $.$mol_file_web = $mol_file_web;
+    $.$mol_file = $mol_file_web;
 })($ || ($ = {}));
 //file.web.js.map
 ;
@@ -3927,7 +4293,7 @@ var $;
             return $.$mol_state_local.value('locale', next) || $.$mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
         }
         static source(lang) {
-            return JSON.parse($.$mol_file.relative(`web.locale=${lang}.json`).content().toString());
+            return JSON.parse($.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
         }
         static texts(lang, next) {
             if (next)
@@ -4134,6 +4500,7 @@ var $;
         Icon() {
             return ((obj) => {
                 obj.uri = () => this.icon();
+                obj.title = () => "";
                 return obj;
             })(new this.$.$mol_image());
         }

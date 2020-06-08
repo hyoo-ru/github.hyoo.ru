@@ -9,6 +9,7 @@
 
 [hyoo_github_compare_project] {
 	flex: 1 1 14rem;
+	flex-direction: column;
 }
 
 [hyoo_github_compare_project_input] {

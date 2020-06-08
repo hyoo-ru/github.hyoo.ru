@@ -4,9 +4,9 @@ namespace $.$$ {
 
 		@ $mol_mem
 		project_ids( next? : string[] ) : string[] {
-			let arg = next && next.join( ',' )
-			arg = this.$.$mol_state_arg.value( 'projects' , arg )
-			return arg ? arg.split( ',' ) : []
+			const arg = this.$.$mol_state_arg.value( 'projects' , next?.join( ',' ) )
+
+			return arg?.split( ',' ) ?? []
 		}
 
 		projects() {
@@ -99,7 +99,7 @@ namespace $.$$ {
 				return sum + Math.ceil( age.duration.count( 'P1D' ) )
 			} , 0 )
 
-			const today  = new this.$.$mol_time_moment().merge({ hour : null , minute : null , second : null , offset : null })
+			const today  = new this.$.$mol_time_moment().merge({ hour : undefined , minute : undefined , second : undefined , offset : undefined })
 
 			this.$.$mol_shared.cache( key , {
 				date : today.toString() ,

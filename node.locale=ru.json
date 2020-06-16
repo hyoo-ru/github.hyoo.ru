@@ -1,4 +1,5 @@
 {
 	"$hyoo_github_compare_description": "Cумма возрастов всех открытых проблем. Меньше - лучше.",
-	"$hyoo_github_compare_title": "Время нерешения проблем проектов на GitHub"
+	"$hyoo_github_compare_title": "Время нерешения проблем проектов на GitHub",
+	"$mol_link_source_hint": "Исходные коды"
 }

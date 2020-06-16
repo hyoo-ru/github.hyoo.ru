@@ -1,4 +1,5 @@
 {
 	"$hyoo_github_compare_description": "Sum of ages of all open issues. Lower is better.",
-	"$hyoo_github_compare_title": "Time of unresolving issues of GitHub projects"
+	"$hyoo_github_compare_title": "Time of unresolving issues of GitHub projects",
+	"$mol_link_source_hint": "Source code"
 }

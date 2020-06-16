@@ -1,5 +1,7 @@
 $hyoo_github_compare $mol_page
 	title @ \Time of unresolving issues of GitHub projects
+	plugins /
+		<= Theme $mol_theme_auto
 	tools /
 		<= Sources $mol_link_source
 			uri \https://github.com/hyoo-ru/github.hyoo.ru/tree/master/compare

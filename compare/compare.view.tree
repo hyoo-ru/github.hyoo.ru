@@ -1,9 +1,8 @@
 $hyoo_github_compare $mol_page
 	title @ \Time of unresolving issues of GitHub projects
 	tools /
-		<= Sources $mol_link_iconed
-			uri \https://github.com/eigenmethod/mol/tree/master/app/issues
-			content /
+		<= Sources $mol_link_source
+			uri \https://github.com/hyoo-ru/github.hyoo.ru/tree/master/compare
 	body /
 		<= Projects $mol_row
 			sub <= projects /
@@ -29,7 +28,6 @@ $hyoo_github_compare_project $mol_view
 			<= Id $mol_string
 				hint \username/repo
 				value?val <=> id?val \
-				debounce 1000
 			<= Homepage $mol_link_iconed
 				uri <= homepage \
 				content /

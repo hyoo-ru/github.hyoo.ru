@@ -12,14 +12,12 @@ jobs:
     
     steps:
     
-    - name: Checkout sources
-      uses: actions/checkout@v1
-    
     - name: Build app
       uses: hyoo-ru/mam_build@master2
       with:
         package: 'hyoo/github'
         modules: 'compare'
+
     - name: Deploy on GitHub Pages
       if: github.ref == 'refs/heads/master'
       uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0

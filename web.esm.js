@@ -3638,7 +3638,7 @@ var $;
             return "a";
         }
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { href: this.uri(), title: this.hint(), target: this.target(), download: this.file_name(), mol_link_current: this.current(), mol_theme: this.theme() });
+            return Object.assign(Object.assign({}, super.attr()), { href: this.uri(), title: this.hint(), target: this.target(), download: this.file_name(), mol_link_current: this.current() });
         }
         sub() {
             return [
@@ -3665,9 +3665,6 @@ var $;
         }
         current() {
             return false;
-        }
-        theme() {
-            return null;
         }
         event_click(event) {
             if (event !== undefined)
@@ -3812,6 +3809,7 @@ var $;
                         color: $.$mol_theme.back,
                     },
                     color: $.$mol_theme.text,
+                    textShadow: '0 0',
                 }
             }
         },
@@ -3853,9 +3851,6 @@ var $;
             }
             minimal_height() {
                 return Math.max(super.minimal_height() || 32);
-            }
-            theme() {
-                return this.current() ? '$mol_theme_base' : null;
             }
         }
         __decorate([

@@ -4006,6 +4006,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const { rem } = $.$mol_style_unit;
     $.$mol_style_define($.$mol_link, {
         textDecoration: 'none',
         color: $.$mol_theme.control,
@@ -4014,6 +4015,7 @@ var $;
         padding: $.$mol_gap.text,
         boxSizing: 'border-box',
         position: 'relative',
+        minWidth: rem(2.5),
         ':hover': {
             background: {
                 color: $.$mol_theme.hover,

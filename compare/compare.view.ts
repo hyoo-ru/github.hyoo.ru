@@ -78,11 +78,11 @@ namespace $.$$ {
 		capacity() {
 			if( !this.id() ) return 0
 
-			const key = 'mol/app/issues/project/' + this.id()
+			const key = 'project/' + this.id()
 			
 			try {
 
-				const cache = this.$.$mol_shared.cache<{ date : string , capacity : number }>( key )
+				const cache = this.$.$mol_shared.cache<{ date : string , capacity : number }>( key ) ?? {}
 
 				if( cache.date ) {
 					const age = new this.$.$mol_time_interval( cache.date + '/' ).duration.count( 'P1D' )

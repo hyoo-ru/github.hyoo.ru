@@ -7020,12 +7020,12 @@ var $;
 (function ($) {
     class $mol_shared extends $.$mol_object2 {
         static cache(key, next) {
-            return this.$.$mol_fetch.json('https://shared-cache.herokuapp.com/' + key, next && {
+            return this.$.$mol_fetch.json('https://sync-hyoo-ru.herokuapp.com/' + key, next && {
                 method: 'PUT',
                 headers: {
                     'content-type': 'application/json',
                 },
-                body: JSON.stringify(next, null, '\t'),
+                body: JSON.stringify(next),
             });
         }
     }
@@ -7723,11 +7723,12 @@ var $;
                 return this.$.$mol_range2(index => this.issues_page(Math.floor(index / 100))[index % 100], () => this.project().open_issues_count);
             }
             capacity() {
+                var _a;
                 if (!this.id())
                     return 0;
-                const key = 'mol/app/issues/project/' + this.id();
+                const key = 'project/' + this.id();
                 try {
-                    const cache = this.$.$mol_shared.cache(key);
+                    const cache = (_a = this.$.$mol_shared.cache(key)) !== null && _a !== void 0 ? _a : {};
                     if (cache.date) {
                         const age = new this.$.$mol_time_interval(cache.date + '/').duration.count('P1D');
                         if (age < 1)

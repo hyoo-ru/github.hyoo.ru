@@ -2119,6 +2119,12 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_icon_reload extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $hyoo_github_compare extends $mol_page {
         title(): string;
         plugins(): readonly any[];
@@ -2158,7 +2164,11 @@ declare namespace $ {
         Capacity_text(id: any): $mol_view;
         capacity_portion(id: any): number;
         Capacity_portion(id: any): $$.$mol_portion;
-        Capacity(id: any): $$.$mol_list;
+        Capacity_info(id: any): $$.$mol_list;
+        Capacity_refresh_icon(id: any): $mol_icon_reload;
+        refresh(id: any, event?: any): any;
+        Capacity_refresh(id: any): $mol_button_minor;
+        Capacity(id: any): $mol_view;
     }
 }
 
@@ -2293,7 +2303,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_shared extends $mol_object2 {
         static value<Value>(key: string, next?: Value): Value;
-        static daily<Value>(key: string, request: () => Value): Value;
+        static daily<Value>(key: string, request: () => Value, refresh?: boolean): Value;
     }
 }
 

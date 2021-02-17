@@ -6568,6 +6568,18 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_reload extends $.$mol_icon {
+        path() {
+            return "M2,12C2,16.97 6.03,21 11,21C13.39,21 15.68,20.06 17.4,18.4L15.9,16.9C14.63,18.25 12.86,19 11,19C4.76,19 1.64,11.46 6.05,7.05C10.46,2.64 18,5.77 18,12H15L19,16H19.1L23,12H20C20,7.03 15.97,3 11,3C6.03,3 2,7.03 2,12Z";
+        }
+    }
+    $.$mol_icon_reload = $mol_icon_reload;
+})($ || ($ = {}));
+//reload.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $hyoo_github_compare extends $.$mol_page {
         title() {
             return this.$.$mol_locale.text('$hyoo_github_compare_title');
@@ -6764,11 +6776,37 @@ var $;
             obj.portion = () => this.capacity_portion(id);
             return obj;
         }
-        Capacity(id) {
+        Capacity_info(id) {
             const obj = new this.$.$mol_list();
             obj.rows = () => [
                 this.Capacity_text(id),
                 this.Capacity_portion(id)
+            ];
+            return obj;
+        }
+        Capacity_refresh_icon(id) {
+            const obj = new this.$.$mol_icon_reload();
+            return obj;
+        }
+        refresh(id, event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        Capacity_refresh(id) {
+            const obj = new this.$.$mol_button_minor();
+            obj.hint = () => this.$.$mol_locale.text('$hyoo_github_compare_Capacity_refresh_hint');
+            obj.sub = () => [
+                this.Capacity_refresh_icon(id)
+            ];
+            obj.click = (event) => this.refresh(id, event);
+            return obj;
+        }
+        Capacity(id) {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.Capacity_info(id),
+                this.Capacity_refresh(id)
             ];
             return obj;
         }
@@ -6836,6 +6874,18 @@ var $;
     __decorate([
         $.$mol_mem_key
     ], $hyoo_github_compare.prototype, "Capacity_portion", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $hyoo_github_compare.prototype, "Capacity_info", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $hyoo_github_compare.prototype, "Capacity_refresh_icon", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $hyoo_github_compare.prototype, "refresh", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $hyoo_github_compare.prototype, "Capacity_refresh", null);
     __decorate([
         $.$mol_mem_key
     ], $hyoo_github_compare.prototype, "Capacity", null);
@@ -7624,34 +7674,37 @@ var $;
 (function ($) {
     class $mol_shared extends $.$mol_object2 {
         static value(key, next) {
-            return this.$.$mol_fetch.json('https://sync-hyoo-ru.herokuapp.com/' + key, next && {
-                method: 'PUT',
-                headers: {
-                    'content-type': 'application/json',
-                },
-                body: JSON.stringify(next),
-            });
+            return this.$.$mol_fetch.json('https://sync-hyoo-ru.herokuapp.com/' + key, next === undefined
+                ? undefined
+                : {
+                    method: 'PUT',
+                    headers: {
+                        'content-type': 'application/json',
+                    },
+                    body: JSON.stringify(next),
+                });
         }
-        static daily(key, request) {
+        static daily(key, request, refresh = false) {
             var _a;
             const today = new this.$.$mol_time_moment().mask('0000-00-00');
-            try {
-                const cache = (_a = this.value(key)) !== null && _a !== void 0 ? _a : {};
-                if (cache.date) {
-                    const interval = new this.$.$mol_time_interval({
-                        start: cache.date,
-                        end: today,
-                    });
-                    const age = interval.duration.count('P1D');
-                    if (age < 1)
-                        return cache.value;
+            if (!refresh)
+                try {
+                    const cache = (_a = this.value(key)) !== null && _a !== void 0 ? _a : {};
+                    if (cache.date) {
+                        const interval = new this.$.$mol_time_interval({
+                            start: cache.date,
+                            end: today,
+                        });
+                        const age = interval.duration.count('P1D');
+                        if (age < 1)
+                            return cache.value;
+                    }
                 }
-            }
-            catch (error) {
-                if (error instanceof Promise)
-                    return $.$mol_fail_hidden(error);
-                console.error(error);
-            }
+                catch (error) {
+                    if (error instanceof Promise)
+                        return $.$mol_fail_hidden(error);
+                    console.error(error);
+                }
             const value = request();
             try {
                 this.$.$mol_shared.value(key, {
@@ -7788,7 +7841,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("hyoo/github/compare/compare.view.css", "[hyoo_github_compare] {\n\tmax-width: 60rem;\n\tmargin: auto;\n}\n\n[hyoo_github_compare_columns] {\n\tflex-wrap: wrap;\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_github_compare_add] {\n\tflex: 1 1 19rem\n}\n\n[hyoo_github_compare_issues_label] {\n\tpadding: var(--mol_gap_text);\n\tflex: 1000 1 10rem;\n}\n\n[hyoo_github_compare_capacity_label] {\n\tpadding: var(--mol_gap_text);\n\tflex: 1000 1 10rem;\n}\n\n[hyoo_github_compare_projects] {\n}\n\n[hyoo_github_compare_project] {\n\tflex-wrap: wrap;\n\tpadding: var(--mol_gap_block);\n\talign-items: flex-start;\n}\n\n[hyoo_github_compare_homepage] {\n\tflex: none;\n}\n\n[hyoo_github_compare_homepage_icon] {\n\tmargin: 0;\n}\n\n[hyoo_github_compare_repo] {\n\tpadding: var(--mol_gap_text);\n\tflex: 1 1 14rem;\n}\n\n[hyoo_github_compare_issues] {\n\tpadding: var(--mol_gap_text);\n\tflex: 1000 1 10rem;\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n[hyoo_github_compare_issues_count] {\n}\n\n[hyoo_github_compare_issues_portion] {\n\tflex: auto;\n\talign-self: stretch;\n\twidth: auto;\n}\n\n[hyoo_github_compare_capacity] {\n\tdisplay: flex;\n\tflex: 1000 1 10rem;\n\tflex-direction: column;\n\tpadding: var(--mol_gap_text);\n}\n\n[hyoo_github_compare_capacity_text] {\n}\n\n[hyoo_github_compare_capacity_portion] {\n\tflex: auto;\n\talign-self: stretch;\n\twidth: auto;\n}\n\n[hyoo_github_compare_issues_portion_indicator] {\n\tbackground-color: chocolate;\n}\n[hyoo_github_compare_capacity_portion_indicator] {\n\tbackground-color: crimson;\n}\n");
+    $.$mol_style_attach("hyoo/github/compare/compare.view.css", "[hyoo_github_compare] {\n\tmax-width: 60rem;\n\tmargin: auto;\n}\n\n[hyoo_github_compare_columns] {\n\tflex-wrap: wrap;\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_github_compare_add] {\n\tflex: 1 1 19rem\n}\n\n[hyoo_github_compare_issues_label] {\n\tpadding: var(--mol_gap_text);\n\tflex: 1000 1 10rem;\n}\n\n[hyoo_github_compare_capacity_label] {\n\tpadding: var(--mol_gap_text);\n\tflex: 1000 1 10rem;\n}\n\n[hyoo_github_compare_projects] {\n}\n\n[hyoo_github_compare_project] {\n\tflex-wrap: wrap;\n\tpadding: var(--mol_gap_block);\n\talign-items: flex-start;\n}\n\n[hyoo_github_compare_homepage] {\n\tflex: none;\n}\n\n[hyoo_github_compare_homepage_icon] {\n\tmargin: 0;\n}\n\n[hyoo_github_compare_repo] {\n\tpadding: var(--mol_gap_text);\n\tflex: 1 1 14rem;\n}\n\n[hyoo_github_compare_issues] {\n\tpadding: var(--mol_gap_text);\n\tflex: 1000 1 10rem;\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n[hyoo_github_compare_issues_count] {\n}\n\n[hyoo_github_compare_issues_portion] {\n\tflex: auto;\n\talign-self: stretch;\n\twidth: auto;\n}\n\n[hyoo_github_compare_capacity] {\n\tflex: 1000 1 10rem;\n\talign-items: flex-end;\n}\n\n[hyoo_github_compare_capacity_info] {\n\tpadding: var(--mol_gap_text);\n\tdisplay: flex;\n\tflex: 1 1 auto;\n}\n\n[hyoo_github_compare_capacity_portion] {\n\tflex: auto;\n\talign-self: stretch;\n\twidth: auto;\n}\n\n[hyoo_github_compare_issues_portion_indicator] {\n\tbackground-color: chocolate;\n}\n[hyoo_github_compare_capacity_portion_indicator] {\n\tbackground-color: crimson;\n}\n");
 })($ || ($ = {}));
 //compare.view.css.js.map
 ;
@@ -7845,7 +7898,7 @@ var $;
                         open_issues_count: res.open_issues_count,
                         homepage: res.homepage,
                     };
-                });
+                }, Boolean(this.refresh(id)));
             }
             homepage(id) {
                 return this.project(id).homepage || this.repo(id);
@@ -7888,7 +7941,7 @@ var $;
                         });
                         return sum + Math.ceil(age.duration.count('P1D'));
                     }, 0);
-                });
+                }, Boolean(this.refresh(id)));
             }
             capacity_text(id) {
                 return this.capacity(id).toLocaleString() + ' days';

@@ -7801,7 +7801,7 @@ var $;
             project_ids(next) {
                 var _a;
                 const arg = this.$.$mol_state_arg.value('projects', next === null || next === void 0 ? void 0 : next.join(','));
-                return (_a = arg === null || arg === void 0 ? void 0 : arg.split(',')) !== null && _a !== void 0 ? _a : [];
+                return (_a = arg === null || arg === void 0 ? void 0 : arg.split(',').filter(Boolean)) !== null && _a !== void 0 ? _a : [];
             }
             projects() {
                 return this.project_ids().map(id => this.Project(id));

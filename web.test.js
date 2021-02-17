@@ -2186,6 +2186,67 @@ var $;
 "use strict";
 var $;
 (function ($_1) {
+    var $$;
+    (function ($$) {
+        $_1.$mol_test({
+            'handle clicks by default'($) {
+                let clicked = false;
+                const clicker = $$.$mol_button.make({
+                    $,
+                    event_click: (event) => { clicked = true; },
+                });
+                const element = clicker.dom_tree();
+                const event = $_1.$mol_dom_context.document.createEvent('mouseevent');
+                event.initEvent('click', true, true);
+                element.dispatchEvent(event);
+                $_1.$mol_assert_ok(clicked);
+            },
+            'no handle clicks if disabled'($) {
+                let clicked = false;
+                const clicker = $$.$mol_button.make({
+                    $,
+                    event_click: (event) => { clicked = true; },
+                    enabled: () => false,
+                });
+                const element = clicker.dom_tree();
+                const event = $_1.$mol_dom_context.document.createEvent('mouseevent');
+                event.initEvent('click', true, true);
+                element.dispatchEvent(event);
+                $_1.$mol_assert_not(clicked);
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+//button.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'all cases of using maybe'() {
+            $.$mol_assert_equal($.$mol_maybe(0)[0], 0);
+            $.$mol_assert_equal($.$mol_maybe(false)[0], false);
+            $.$mol_assert_equal($.$mol_maybe(null)[0], void 0);
+            $.$mol_assert_equal($.$mol_maybe(void 0)[0], void 0);
+            $.$mol_assert_equal($.$mol_maybe(void 0).map(v => v.toString())[0], void 0);
+            $.$mol_assert_equal($.$mol_maybe(0).map(v => v.toString())[0], '0');
+        },
+    });
+})($ || ($ = {}));
+//maybe.test.js.map
+;
+"use strict";
+var $;
+(function ($_1) {
+    $_1.$mol_test_mocks.push($ => {
+        $.$mol_after_work = $_1.$mol_after_mock_timeout;
+    });
+})($ || ($ = {}));
+//work.test.js.map
+;
+"use strict";
+var $;
+(function ($_1) {
     $_1.$mol_test_mocks.push(context => {
         class $mol_state_arg_mock extends $_1.$mol_state_arg {
             static href(next) { return next || ''; }
@@ -2233,103 +2294,285 @@ var $;
 //arg.web.test.js.map
 ;
 "use strict";
-var $;
-(function ($_1) {
-    $_1.$mol_test_mocks.push($ => {
-        $.$mol_after_work = $_1.$mol_after_mock_timeout;
-    });
-})($ || ($ = {}));
-//work.test.js.map
+//intersect.test.js.map
 ;
 "use strict";
 var $;
 (function ($) {
     $.$mol_test({
-        'Vector limiting'() {
-            let point = new $.$mol_vector_3d(7, 10, 13);
-            const res = point.limited([[1, 5], [15, 20], [5, 10]]);
-            $.$mol_assert_equal(res.x, 5);
-            $.$mol_assert_equal(res.y, 15);
-            $.$mol_assert_equal(res.z, 10);
+        'escape'() {
+            const specials = $.$mol_regexp.from('.*+?^${}()|[]\\');
+            $.$mol_assert_equal(specials.source, '\\.\\*\\+\\?\\^\\$\\{\\}\\(\\)\\|\\[\\]\\\\');
         },
-        'Vector adding scalar'() {
-            let point = new $.$mol_vector_3d(1, 2, 3);
-            let res = point.added0(5);
-            $.$mol_assert_equal(res.x, 6);
-            $.$mol_assert_equal(res.y, 7);
-            $.$mol_assert_equal(res.z, 8);
+        'char code'() {
+            const space = $.$mol_regexp.char_code(32);
+            $.$mol_assert_equal(space.exec(' ')[0], ' ');
         },
-        'Vector adding vector'() {
-            let point = new $.$mol_vector_3d(1, 2, 3);
-            let res = point.added1([5, 10, 15]);
-            $.$mol_assert_equal(res.x, 6);
-            $.$mol_assert_equal(res.y, 12);
-            $.$mol_assert_equal(res.z, 18);
+        'repeat fixed'() {
+            const { repeat, digit } = $.$mol_regexp;
+            const year = repeat(digit, 4, 4);
+            $.$mol_assert_equal(year.exec('#2020#')[0], '2020');
         },
-        'Vector multiplying scalar'() {
-            let point = new $.$mol_vector_3d(2, 3, 4);
-            let res = point.multed0(-1);
-            $.$mol_assert_equal(res.x, -2);
-            $.$mol_assert_equal(res.y, -3);
-            $.$mol_assert_equal(res.z, -4);
+        'greedy repeat'() {
+            const { repeat, repeat_greedy, letter } = $.$mol_regexp;
+            $.$mol_assert_equal(repeat(letter).exec('abc')[0], '');
+            $.$mol_assert_equal(repeat_greedy(letter).exec('abc')[0], 'abc');
         },
-        'Vector multiplying vector'() {
-            let point = new $.$mol_vector_3d(2, 3, 4);
-            let res = point.multed1([5, 2, -2]);
-            $.$mol_assert_equal(res.x, 10);
-            $.$mol_assert_equal(res.y, 6);
-            $.$mol_assert_equal(res.z, -8);
+        'repeat range'() {
+            const { repeat_greedy, digit } = $.$mol_regexp;
+            const year = repeat_greedy(digit, 2, 4);
+            $.$mol_assert_equal(year.exec('#2#'), null);
+            $.$mol_assert_equal(year.exec('#20#')[0], '20');
+            $.$mol_assert_equal(year.exec('#2020#')[0], '2020');
+            $.$mol_assert_equal(year.exec('#20201#')[0], '2020');
         },
-        'Matrix adding matrix'() {
-            let matrix = new $.$mol_vector_matrix(...[[1, 2], [3, 4], [5, 6]]);
-            let res = matrix.added2([[10, 20], [30, 40], [50, 60]]);
-            $.$mol_assert_equal(res[0][0], 11);
-            $.$mol_assert_equal(res[0][1], 22);
-            $.$mol_assert_equal(res[1][0], 33);
-            $.$mol_assert_equal(res[1][1], 44);
-            $.$mol_assert_equal(res[2][0], 55);
-            $.$mol_assert_equal(res[2][1], 66);
+        'repeat from'() {
+            const { repeat_greedy, letter } = $.$mol_regexp;
+            const name = repeat_greedy(letter, 2);
+            $.$mol_assert_equal(name.exec('##'), null);
+            $.$mol_assert_equal(name.exec('#a#'), null);
+            $.$mol_assert_equal(name.exec('#ab#')[0], 'ab');
+            $.$mol_assert_equal(name.exec('#abc#')[0], 'abc');
         },
-        'Matrix multiplying matrix'() {
-            let matrix = new $.$mol_vector_matrix(...[[2, 3], [4, 5], [6, 7]]);
-            let res = matrix.multed2([[2, 3], [4, 5], [6, 7]]);
-            $.$mol_assert_equal(res[0][0], 4);
-            $.$mol_assert_equal(res[0][1], 9);
-            $.$mol_assert_equal(res[1][0], 16);
-            $.$mol_assert_equal(res[1][1], 25);
-            $.$mol_assert_equal(res[2][0], 36);
-            $.$mol_assert_equal(res[2][1], 49);
+        'optional'() {
+            const { optional, letter } = $.$mol_regexp;
+            const name = optional(letter);
+            $.$mol_assert_equal(name.exec('')[0], '');
+            $.$mol_assert_equal(name.exec('a')[0], 'a');
+            $.$mol_assert_equal(name.exec('ab')[0], 'a');
         },
-        'Range expanding'() {
-            let range = $.$mol_vector_range_full.inversed;
-            const expanded = range.expanded0(10).expanded0(5);
-            $.$mol_assert_like([...expanded], [5, 10]);
+        'from string'() {
+            const regexp = $.$mol_regexp.from('[\\d]');
+            $.$mol_assert_equal(regexp.source, '\\[\\\\d\\]');
+            $.$mol_assert_equal(regexp.flags, 'gu');
         },
-        'Vector of range expanding by vector'() {
-            let dimensions = new $.$mol_vector_2d($.$mol_vector_range_full.inversed, $.$mol_vector_range_full.inversed);
-            const expanded = dimensions.expanded1([1, 7]).expanded1([3, 5]);
-            $.$mol_assert_like([...expanded.x], [1, 3]);
-            $.$mol_assert_like([...expanded.y], [5, 7]);
+        'from regexp'() {
+            const regexp = $.$mol_regexp.from(/[\d]/i);
+            $.$mol_assert_equal(regexp.source, '[\\d]');
+            $.$mol_assert_equal(regexp.flags, 'i');
         },
-        'Vector of range expanding by vector of range'() {
-            let dimensions = new $.$mol_vector_2d($.$mol_vector_range_full.inversed, $.$mol_vector_range_full.inversed);
-            const expanded = dimensions
-                .expanded2([[1, 3], [7, 9]])
-                .expanded2([[2, 4], [6, 8]]);
-            $.$mol_assert_like([...expanded.x], [1, 4]);
-            $.$mol_assert_like([...expanded.y], [6, 9]);
+        'case ignoring'() {
+            const xxx = $.$mol_regexp.from('x', { ignoreCase: true });
+            $.$mol_assert_like(xxx.flags, 'giu');
+            $.$mol_assert_like(xxx.exec('xx')[0], 'x');
+            $.$mol_assert_like(xxx.exec('XX')[0], 'X');
         },
-        'Vector of infinity range expanding by vector of range'() {
-            let dimensions = new $.$mol_vector_2d($.$mol_vector_range_full.inversed, $.$mol_vector_range_full.inversed);
-            const next = new $.$mol_vector_2d($.$mol_vector_range_full.inversed, $.$mol_vector_range_full.inversed);
-            const expanded = next
-                .expanded2(dimensions);
-            $.$mol_assert_like([...expanded.x], [Infinity, -Infinity]);
-            $.$mol_assert_like([...expanded.y], [Infinity, -Infinity]);
+        'multiline mode'() {
+            const { end } = $.$mol_regexp;
+            const xxx = $.$mol_regexp.from(['x', end], { multiline: true });
+            $.$mol_assert_like(xxx.exec('x\ny')[0], 'x');
+            $.$mol_assert_like(xxx.flags, 'gmu');
+        },
+        'sequence'() {
+            const { begin, end, digit, repeat } = $.$mol_regexp;
+            const year = repeat(digit, 4, 4);
+            const dash = '-';
+            const month = repeat(digit, 2, 2);
+            const day = repeat(digit, 2, 2);
+            const date = $.$mol_regexp.from([begin, year, dash, month, dash, day, end], { ignoreCase: true });
+            $.$mol_assert_like(date.exec('2020-01-02')[0], '2020-01-02');
+            $.$mol_assert_like(date.ignoreCase, true);
+        },
+        'only groups'() {
+            const regexp = $.$mol_regexp.from({ dog: '@' });
+            $.$mol_assert_like([...regexp.parse('#')], [{ 0: '#' }]);
+            $.$mol_assert_like([...regexp.parse('@')], [{ dog: '@' }]);
+        },
+        'catch skipped'() {
+            const regexp = $.$mol_regexp.from(/(@)(\d?)/g);
+            $.$mol_assert_like([...regexp.parse('[[@]]')], [
+                { 0: '[[' },
+                { 1: '@', 2: '' },
+                { 0: ']]' },
+            ]);
+        },
+        'enum variants'() {
+            let Sex;
+            (function (Sex) {
+                Sex["male"] = "male";
+                Sex["female"] = "female";
+            })(Sex || (Sex = {}));
+            const sexism = $.$mol_regexp.from(Sex);
+            $.$mol_assert_like([...sexism.parse('')], []);
+            $.$mol_assert_like([...sexism.parse('male')], [{ male: 'male', female: '' }]);
+            $.$mol_assert_like([...sexism.parse('female')], [{ male: '', female: 'female' }]);
+        },
+        'recursive only groups'() {
+            let Sex;
+            (function (Sex) {
+                Sex["male"] = "male";
+                Sex["female"] = "female";
+            })(Sex || (Sex = {}));
+            const sexism = $.$mol_regexp.from({ Sex });
+            $.$mol_assert_like([...sexism.parse('')], []);
+            $.$mol_assert_like([...sexism.parse('male')], [{ Sex: 'male', male: 'male', female: '' }]);
+            $.$mol_assert_like([...sexism.parse('female')], [{ Sex: 'female', male: '', female: 'female' }]);
+        },
+        'sequence with groups'() {
+            const { begin, end, digit, repeat } = $.$mol_regexp;
+            const year = repeat(digit, 4, 4);
+            const dash = '-';
+            const month = repeat(digit, 2, 2);
+            const day = repeat(digit, 2, 2);
+            const regexp = $.$mol_regexp.from([begin, { year }, dash, { month }, dash, { day }, end]);
+            const found = [...regexp.parse('2020-01-02')];
+            $.$mol_assert_like(found, [{
+                    year: '2020',
+                    month: '01',
+                    day: '02',
+                }]);
+        },
+        'sequence with groups of mixed type'() {
+            const prefix = '/';
+            const postfix = '/';
+            const regexp = $.$mol_regexp.from([{ prefix }, /(\w+)/, { postfix }, /([gumi]*)/]);
+            const found = [...regexp.parse('/foo/mi')];
+            $.$mol_assert_like(found, [{
+                    prefix: '/',
+                    0: 'foo',
+                    postfix: '/',
+                    1: 'mi',
+                }]);
+        },
+        'recursive sequence with groups'() {
+            const { begin, end, digit, repeat } = $.$mol_regexp;
+            const year = repeat(digit, 4, 4);
+            const dash = '-';
+            const month = repeat(digit, 2, 2);
+            const day = repeat(digit, 2, 2);
+            const regexp = $.$mol_regexp.from([begin, { date: [{ year }, dash, { month }] }, dash, { day }, end]);
+            const found = [...regexp.parse('2020-01-02')];
+            $.$mol_assert_like(found, [{
+                    date: '2020-01',
+                    year: '2020',
+                    month: '01',
+                    day: '02',
+                }]);
+        },
+        'parse multiple'() {
+            const { digit } = $.$mol_regexp;
+            const regexp = $.$mol_regexp.from({ digit });
+            $.$mol_assert_like([...regexp.parse('123')], [
+                { digit: '1' },
+                { digit: '2' },
+                { digit: '3' },
+            ]);
+        },
+        'variants'() {
+            const { begin, or, end } = $.$mol_regexp;
+            const sexism = $.$mol_regexp.from([begin, 'sex = ', { sex: ['male', or, 'female'] }, end]);
+            $.$mol_assert_like([...sexism.parse('sex = male')], [{ sex: 'male' }]);
+            $.$mol_assert_like([...sexism.parse('sex = female')], [{ sex: 'female' }]);
+            $.$mol_assert_like([...sexism.parse('sex = malefemale')], [{ 0: 'sex = malefemale' }]);
+        },
+        'force after'() {
+            const { letter, force_after } = $.$mol_regexp;
+            const regexp = $.$mol_regexp.from([letter, force_after('.')]);
+            $.$mol_assert_equal(regexp.exec('x.')[0], 'x');
+            $.$mol_assert_equal(regexp.exec('x5'), null);
+        },
+        'forbid after'() {
+            const { letter, forbid_after } = $.$mol_regexp;
+            const regexp = $.$mol_regexp.from([letter, forbid_after('.')]);
+            $.$mol_assert_equal(regexp.exec('x.'), null);
+            $.$mol_assert_equal(regexp.exec('x5')[0], 'x');
+        },
+        'byte except'() {
+            const { byte_except, letter, tab } = $.$mol_regexp;
+            const name = byte_except(letter, tab);
+            $.$mol_assert_equal(name.exec('a'), null);
+            $.$mol_assert_equal(name.exec('\t'), null);
+            $.$mol_assert_equal(name.exec('(')[0], '(');
         },
     });
 })($ || ($ = {}));
-//vector.test.js.map
+//regexp.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'parse and serial'() {
+            $.$mol_assert_equal(new $.$mol_time_duration('P42.1Y').toString(), 'P42.1YT');
+            $.$mol_assert_equal(new $.$mol_time_duration('P42.1M').toString(), 'P42.1MT');
+            $.$mol_assert_equal(new $.$mol_time_duration('P42.1D').toString(), 'P42.1DT');
+            $.$mol_assert_equal(new $.$mol_time_duration('PT42.1h').toString(), 'PT42.1H');
+            $.$mol_assert_equal(new $.$mol_time_duration('PT42.1m').toString(), 'PT42.1M');
+            $.$mol_assert_equal(new $.$mol_time_duration('PT42.1s').toString(), 'PT42.1S');
+            $.$mol_assert_equal(new $.$mol_time_duration('P1Y2M3DT4h5m6.7s').toString(), 'P1Y2M3DT4H5M6.7S');
+        },
+        'format typed'() {
+            $.$mol_assert_equal(new $.$mol_time_duration('P1Y2M3DT4h5m6s').toString('P#Y#M#DT#h#m#s'), 'P1Y2M3DT4H5M6S');
+        },
+    });
+})($ || ($ = {}));
+//duration.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'parse and serial'() {
+            $.$mol_assert_equal(new $.$mol_time_moment('2014').toString(), '2014');
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01').toString(), '2014-01');
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02').toString(), '2014-01-02');
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T03').toString(), '2014-01-02T03');
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T03:04').toString(), '2014-01-02T03:04');
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T03:04:05').toString(), '2014-01-02T03:04:05');
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T03:04:05.006').toString(), '2014-01-02T03:04:05.006');
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T03:04:05.006Z').toString(), '2014-01-02T03:04:05.006+00:00');
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T03:04:05.006+07:00').toString(), '2014-01-02T03:04:05.006+07:00');
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T03:04:05+07:08').toString(), '2014-01-02T03:04:05+07:08');
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T03:04+07:08').toString(), '2014-01-02T03:04+07:08');
+            $.$mol_assert_equal(new $.$mol_time_moment('T03:04+07:08').toString(), 'T03:04+07:08');
+            $.$mol_assert_equal(new $.$mol_time_moment('T03:04:05').toString(), 'T03:04:05');
+            $.$mol_assert_equal(new $.$mol_time_moment('T03:04').toString(), 'T03:04');
+            $.$mol_assert_equal(new $.$mol_time_moment('T03').toString(), 'T03');
+        },
+        'format simple'() {
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T01:02:03.000000').toString('AD YY-M-D h:m:s'), '21 14-1-2 1:2:3');
+        },
+        'format padded'() {
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T01:02:03.000').toString('YYYY-MM-DD hh:mm:ss'), '2014-01-02 01:02:03');
+        },
+        'format time zone'() {
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T01:02:03+05:00').toString('Z'), '+05:00');
+        },
+        'format names'() {
+            $.$mol_assert_ok(new $.$mol_time_moment('2014-01-02T01:02:03.000').toString('Month Mon | WeekDay WD'));
+        },
+        'shifting'() {
+            $.$mol_assert_equal(new $.$mol_time_moment('T15:54:58.243+03:00').shift({}).toString(), 'T15:54:58.243+03:00');
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02').shift('P1Y').toString(), '2015-01-02');
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02').shift('P12M').toString(), '2015-01-02');
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02').shift('P365D').toString(), '2015-01-02');
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02').shift('PT8760h').toString(), '2015-01-02');
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01').shift('PT8760h').toString(), '2015-01');
+            $.$mol_assert_equal(new $.$mol_time_moment('2014-01').shift('PT-8760h').toString(), '2013-01');
+        },
+        'normalization'() {
+            $.$mol_assert_equal(new $.$mol_time_moment('2015-07-35').normal.toString(), '2015-08-04');
+        },
+        'iso week day'() {
+            $.$mol_assert_equal(new $.$mol_time_moment('2017-09-17').weekday, 6);
+            $.$mol_assert_equal(new $.$mol_time_moment('2017-09-18').weekday, 0);
+        },
+    });
+})($ || ($ = {}));
+//moment.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'triplets'() {
+            $.$mol_assert_equal(new $.$mol_time_interval('2015-01-01/P1M').end.toString(), '2015-02-01');
+            $.$mol_assert_equal(new $.$mol_time_interval('P1M/2015-02-01').start.toString(), '2015-01-01');
+            $.$mol_assert_equal(new $.$mol_time_interval('2015-01-01/2015-02-01').duration.toString(), 'PT2678400S');
+        }
+    });
+})($ || ($ = {}));
+//interval.test.js.map
 ;
 "use strict";
 var $;
@@ -2478,92 +2721,6 @@ var $;
     });
 })($ || ($ = {}));
 //range2.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
-        'parse and serial'() {
-            $.$mol_assert_equal(new $.$mol_time_duration('P42.1Y').toString(), 'P42.1YT');
-            $.$mol_assert_equal(new $.$mol_time_duration('P42.1M').toString(), 'P42.1MT');
-            $.$mol_assert_equal(new $.$mol_time_duration('P42.1D').toString(), 'P42.1DT');
-            $.$mol_assert_equal(new $.$mol_time_duration('PT42.1h').toString(), 'PT42.1H');
-            $.$mol_assert_equal(new $.$mol_time_duration('PT42.1m').toString(), 'PT42.1M');
-            $.$mol_assert_equal(new $.$mol_time_duration('PT42.1s').toString(), 'PT42.1S');
-            $.$mol_assert_equal(new $.$mol_time_duration('P1Y2M3DT4h5m6.7s').toString(), 'P1Y2M3DT4H5M6.7S');
-        },
-        'format typed'() {
-            $.$mol_assert_equal(new $.$mol_time_duration('P1Y2M3DT4h5m6s').toString('P#Y#M#DT#h#m#s'), 'P1Y2M3DT4H5M6S');
-        },
-    });
-})($ || ($ = {}));
-//duration.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
-        'parse and serial'() {
-            $.$mol_assert_equal(new $.$mol_time_moment('2014').toString(), '2014');
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01').toString(), '2014-01');
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02').toString(), '2014-01-02');
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T03').toString(), '2014-01-02T03');
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T03:04').toString(), '2014-01-02T03:04');
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T03:04:05').toString(), '2014-01-02T03:04:05');
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T03:04:05.006').toString(), '2014-01-02T03:04:05.006');
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T03:04:05.006Z').toString(), '2014-01-02T03:04:05.006+00:00');
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T03:04:05.006+07:00').toString(), '2014-01-02T03:04:05.006+07:00');
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T03:04:05+07:08').toString(), '2014-01-02T03:04:05+07:08');
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T03:04+07:08').toString(), '2014-01-02T03:04+07:08');
-            $.$mol_assert_equal(new $.$mol_time_moment('T03:04+07:08').toString(), 'T03:04+07:08');
-            $.$mol_assert_equal(new $.$mol_time_moment('T03:04:05').toString(), 'T03:04:05');
-            $.$mol_assert_equal(new $.$mol_time_moment('T03:04').toString(), 'T03:04');
-            $.$mol_assert_equal(new $.$mol_time_moment('T03').toString(), 'T03');
-        },
-        'format simple'() {
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T01:02:03.000000').toString('AD YY-M-D h:m:s'), '21 14-1-2 1:2:3');
-        },
-        'format padded'() {
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T01:02:03.000').toString('YYYY-MM-DD hh:mm:ss'), '2014-01-02 01:02:03');
-        },
-        'format time zone'() {
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02T01:02:03+05:00').toString('Z'), '+05:00');
-        },
-        'format names'() {
-            $.$mol_assert_ok(new $.$mol_time_moment('2014-01-02T01:02:03.000').toString('Month Mon | WeekDay WD'));
-        },
-        'shifting'() {
-            $.$mol_assert_equal(new $.$mol_time_moment('T15:54:58.243+03:00').shift({}).toString(), 'T15:54:58.243+03:00');
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02').shift('P1Y').toString(), '2015-01-02');
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02').shift('P12M').toString(), '2015-01-02');
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02').shift('P365D').toString(), '2015-01-02');
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01-02').shift('PT8760h').toString(), '2015-01-02');
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01').shift('PT8760h').toString(), '2015-01');
-            $.$mol_assert_equal(new $.$mol_time_moment('2014-01').shift('PT-8760h').toString(), '2013-01');
-        },
-        'normalization'() {
-            $.$mol_assert_equal(new $.$mol_time_moment('2015-07-35').normal.toString(), '2015-08-04');
-        },
-        'iso week day'() {
-            $.$mol_assert_equal(new $.$mol_time_moment('2017-09-17').weekday, 6);
-            $.$mol_assert_equal(new $.$mol_time_moment('2017-09-18').weekday, 0);
-        },
-    });
-})($ || ($ = {}));
-//moment.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
-        'triplets'() {
-            $.$mol_assert_equal(new $.$mol_time_interval('2015-01-01/P1M').end.toString(), '2015-02-01');
-            $.$mol_assert_equal(new $.$mol_time_interval('P1M/2015-02-01').start.toString(), '2015-01-01');
-            $.$mol_assert_equal(new $.$mol_time_interval('2015-01-01/2015-02-01').duration.toString(), 'PT2678400S');
-        }
-    });
-})($ || ($ = {}));
-//interval.test.js.map
 ;
 "use strict";
 var $;

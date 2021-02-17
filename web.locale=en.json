@@ -1,5 +1,13 @@
 {
-	"$hyoo_github_compare_description": "Sum of ages of all open issues. Lower is better.",
-	"$hyoo_github_compare_title": "Time of unresolving issues of GitHub projects",
-	"$mol_link_source_hint": "Source code"
+	"$hyoo_github_compare_Add_hint": "Add project...",
+	"$hyoo_github_compare_Homepage_hint": "Homepage",
+	"$hyoo_github_compare_Remove_hint": "Remove",
+	"$hyoo_github_compare_Repo_hint": "Repository",
+	"$hyoo_github_compare_capacity_label": "Sum of ages of all open issues",
+	"$hyoo_github_compare_issues_label": "Open issues",
+	"$hyoo_github_compare_title": "GitHub projects comparison",
+	"$mol_lights_toggle_hint": "Toggle lights",
+	"$mol_link_source_hint": "Source code",
+	"$mol_select_hint": "Search..",
+	"$mol_select_no_options_message": "No options"
 }

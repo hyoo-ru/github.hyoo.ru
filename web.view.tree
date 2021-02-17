@@ -30,21 +30,53 @@ $mol_page $mol_view
 $mol_theme_auto $mol_plugin
 	attr * mol_theme <= theme \
 
-$mol_link $mol_view
-	dom_name \a
+$mol_speck $mol_view
 	attr *
 		^
-		href <= uri \
-		title <= hint \
-		target <= target \_self
-		download <= file_name \
-		mol_link_current <= current false
-	sub /$mol_view_content
-		<= title
-	arg *
+		mol_theme \$mol_theme_accent
+	style *
+		^
+		minHeight \1em
+	sub /
+		<= value null
+
+$mol_button $mol_view
+	enabled true
+	minimal_height 40
+	click?event null
+	event_click?event null
 	event *
 		^
-		click?event <=> click?event <=> event_click?event null
+		click?event <=> event_activate?event null
+		keydown?event <=> event_key_press?event null 
+	attr *
+		^
+		disabled <= disabled false
+		role \button
+		tabindex <= tab_index 0
+		title <= hint_or_error <= hint \
+	sub /$mol_view_content
+		<= title
+	Speck $mol_speck
+
+$mol_button_typed $mol_button
+
+$mol_button_minor $mol_button_typed
+
+$mol_check $mol_button_minor
+	attr *
+		^
+		mol_check_checked <= checked?val false
+		aria-checked <= checked?val false
+		role \checkbox
+	sub /
+		<= Icon null
+		<= label /
+			<= Title $mol_view
+				sub /
+					<= title \
+
+$mol_check_icon $mol_check
 
 $mol_svg $mol_view
 	dom_name \svg
@@ -74,187 +106,35 @@ $mol_icon $mol_svg_root
 		<= Path $mol_svg_path
 			geometry <= path \
 
+$mol_icon_brightness_6 $mol_icon path \M12,18V6C15.31,6 18,8.69 18,12C18,15.31 15.31,18 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z
+
+$mol_lights_toggle $mol_check_icon
+	Icon <= Lights_icon $mol_icon_brightness_6
+	hint @ \Toggle lights
+	checked?val <=> lights?val false
+
+$mol_link $mol_view
+	dom_name \a
+	attr *
+		^
+		href <= uri \
+		title <= hint \
+		target <= target \_self
+		download <= file_name \
+		mol_link_current <= current false
+	sub /$mol_view_content
+		<= title
+	arg *
+	event *
+		^
+		click?event <=> click?event <=> event_click?event null
+
 $mol_icon_github_circle $mol_icon path \M12,2C6.48,2 2,6.48 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12C22,6.48 17.52,2 12,2Z
 
 $mol_link_source $mol_link
 	hint @ \Source code
 	sub /
 		<= Icon $mol_icon_github_circle
-
-$mol_row $mol_view
-
-$mol_svg_group $mol_svg
-	dom_name \g
-
-$mol_plot_graph $mol_svg_group
-	series_x /number
-	series_y /number
-	-
-	attr *
-		^
-		mol_plot_graph_type <= type \solid
-	-
-	style *
-		^
-		color <= color \
-	-
-	viewport $mol_vector_2d /
-		<= viewport_x $mol_vector_range /
-			Infinity
-			-Infinity
-		<= viewport_y $mol_vector_range /
-			Infinity
-			-Infinity
-	shift /number
-		0
-		0
-	scale /number
-		1
-		1
-	cursor_position $mol_vector_2d /
-		NaN
-		NaN
-	dimensions_pane $mol_vector_2d /
-		<= dimensions_pane_x $mol_vector_range /
-			Infinity
-			-Infinity
-		<= dimensions_pane_y $mol_vector_range /
-			Infinity
-			-Infinity
-	dimensions $mol_vector_2d /
-		<= dimensions_x $mol_vector_range /
-			Infinity
-			-Infinity
-		<= dimensions_y $mol_vector_range /
-			Infinity
-			-Infinity
-	size_real $mol_vector_2d /
-		0
-		0
-	gap $mol_vector_2d /
-		<= gap_x $mol_vector_range /
-			0
-			0
-		<= gap_y $mol_vector_range /
-			0
-			0
-	indexes /number
-	points /readonly(number)[]
-	front /$mol_svg
-	back /$mol_svg
-	hue NaN
-	Sample null
-
-$mol_plot_graph_sample $mol_view
-	attr *
-		^
-		mol_plot_graph_type <= type \solid
-	style *
-		^
-		color <= color \black
-
-$mol_plot_bar $mol_plot_graph
-	style *
-		^
-		stroke-width <= stroke_width \1rem
-	sub /
-		<= Curve $mol_svg_path
-			geometry <= curve \
-	Sample $mol_plot_graph_sample
-		color <= color
-
-$mol_svg_text $mol_svg
-	dom_name \text
-	pos /
-	attr *
-		^
-		x <= pos_x \
-		y <= pos_y \
-		text-anchor <= align \middle
-	sub /
-		<= text \
-
-$mol_svg_rect $mol_svg
-	dom_name \rect
-	pos /
-	attr *
-		^
-		width <= width \0
-		height <= height \0
-		x <= pos_x \
-		y <= pos_y \
-
-$mol_svg_text_box $mol_svg_group
-	font_size 16
-	width 0
-	sub /
-		<= Back $mol_svg_rect
-			width <= box_width \0.5rem
-			height <= box_height \1rem
-			pos /
-				<= box_pos_x <= pos_x
-				<= box_pos_y \0
-		<= Text $mol_svg_text
-			pos /
-				<= pos_x \0
-				<= pos_y \100%
-			align <= align \start
-			sub /
-				<= text \
-
-$mol_plot_ruler $mol_plot_graph
-	step 0
-	scale_axis 1
-	scale_step 1
-	shift_axis 1
-	dimensions_axis $mol_vector_range /
-		Infinity
-		-Infinity
-	viewport_axis $mol_vector_range /
-		Infinity
-		-Infinity
-	axis_points /number
-	normalize?val 0
-	precision 1
-	sub /
-		<= Background $mol_svg_rect
-			pos_x <= background_x \0
-			pos_y <= background_y \0
-			width <= background_width \100%
-			height <= background_height \14
-		<= Curve $mol_svg_path
-			geometry <= curve \
-		<= labels_formatted /
-		<= Title $mol_svg_text_box
-			pos_x <= title_pos_x \0
-			pos_y <= title_pos_y \100%
-			align <= title_align \start
-			text <= title
-	Label!index $mol_svg_text
-		pos <= label_pos!index /
-			<= label_pos_x!index \
-			<= label_pos_y!index \
-		text <= label_text!index \
-		align <= label_align \
-
-$mol_plot_ruler_vert $mol_plot_ruler
-	title_align \end
-	label_align \end
-	title_pos_y \14
-	label_pos_x!v <= title_pos_x
-	background_height \100%
-	background_width <= title_pos_x
-
-$mol_plot_ruler_hor $mol_plot_ruler
-	title_align \start
-	label_align \middle
-	title_pos_x \0
-	title_pos_y \100%
-	label_pos_y!v <= title_pos_y
-	background_width \100%
-
-$mol_plot_mark_hor $mol_plot_ruler_hor
-	labels /string
 
 $mol_meter $mol_plugin
 	zoom 1
@@ -267,142 +147,31 @@ $mol_meter $mol_plugin
 	bottom?val 0
 	top?val 0
 
-$mol_touch $mol_plugin
-	start_zoom?val 0
-	start_distance?val 0
-	zoom?val 1
-	-
-	start_pan?val /
-		0
-		0
-	pan?val /
-		0
-		0
-	pos?val /
-		NaN
-		NaN
-	-
-	start_pos?val null
-	swipe_precision 16
-	-
-	swipe_right?val null
-	swipe_bottom?val null
-	swipe_left?val null
-	swipe_top?val null
-	-
-	swipe_from_right?val null
-	swipe_from_bottom?val null
-	swipe_from_left?val null
-	swipe_from_top?val null
-	-
-	swipe_to_right?val null
-	swipe_to_bottom?val null
-	swipe_to_left?val null
-	swipe_to_top?val null
-	-
+$mol_pop $mol_view
+	event * keydown?event <=> keydown?event null
+	showed?val false
+	plugins /$mol_plugin
+		<= Meter $mol_meter
+			top => top
+			bottom => bottom
+			left => left
+			right => right
+	sub /
+		<= Anchor null
+		<= Bubble $mol_pop_bubble
+			align <= align \bottom_center
+			content <= bubble_content /$mol_view_content
+			height_max <= height_max 9999
+
+$mol_pop_bubble $mol_scroll
+	sub <= content /$mol_view_content
 	style *
 		^
-		touch-action \none
-		overscroll-behavior \none
-	-
-	event *
+		maxHeight <= height_max 9999
+	attr *
 		^
-		touchstart?event <=> event_start?event null
-		touchmove?event <=> event_move?event null
-		touchend?event <=> event_end?event null
-		mousedown?event <=> event_start?event null
-		mousemove?event <=> event_move?event null
-		mouseup?event <=> event_end?event null
-		mouseleave?event <=> event_leave?event null
-		wheel?event <=> event_wheel?event null
-
-$mol_plot_pane $mol_svg_root
-	aspect \none
-	-
-	hue_base?val NaN
-	hue_shift?val 111
-	-
-	gap_hor 48
-	gap_vert 24
-	gap_left <= gap_hor
-	gap_right <= gap_hor
-	gap_top <= gap_vert
-	gap_bottom <= gap_vert
-	gap $mol_vector_2d /
-		<= gap_x $mol_vector_range /
-			<= gap_left
-			<= gap_right
-		<= gap_y $mol_vector_range /
-			<= gap_bottom
-			<= gap_top
-	-
-	shift_limit $mol_vector_2d /
-		<= shift_limit_x $mol_vector_range /
-			0
-			0
-		<= shift_limit_y $mol_vector_range /
-			0
-			0
-	shift_default /number
-		0
-		0
-	shift?val /number
-		0
-		0
-	scale_limit $mol_vector_2d /
-		<= scale_limit_x $mol_vector_range /
-			0
-			Infinity
-		<= scale_limit_y $mol_vector_range /
-			0
-			Infinity
-	scale_default /number
-		0
-		0
-	scale?val /number
-		1
-		1
-	scale_x?val 0
-	scale_y?val 0
-	size $mol_vector_2d /
-		0
-		0
-	size_real $mol_vector_2d /
-		1
-		1
-	dimensions_viewport $mol_vector_2d /
-		<= dimensions_viewport_x $mol_vector_range /
-			Infinity
-			-Infinity
-		<= dimensions_viewport_y $mol_vector_range /
-			Infinity
-			-Infinity
-	dimensions $mol_vector_2d /
-		<= dimensions_x $mol_vector_range /
-			Infinity
-			-Infinity
-		<= dimensions_y $mol_vector_range /
-			Infinity
-			-Infinity
-	-
-	sub <= graphs_sorted /$mol_svg
-	graphs_colored <= graphs_positioned <= graphs /$mol_plot_graph
-	cursor_position?val $mol_vector_2d /
-		NaN
-		NaN
-	-
-	plugins /
-		^
-		<= Meter $mol_meter
-			width => width
-			height => height
-		<= Touch $mol_touch
-			zoom?val <=> scale_x?val
-			pan?val <=> shift?val
-			pos?val <=> cursor_position?val
-	event *
-		^
-		dblclick?event <=> reset?event null
+		mol_pop_align <= align \
+		tabindex 0
 
 $mol_hotkey $mol_plugin
 	event *
@@ -437,6 +206,91 @@ $mol_string $mol_view
 		<= Submit $mol_hotkey
 			key * enter?event <=> submit?event null
 
+$mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
+
+$mol_paragraph $mol_view
+	line_height 24
+	letter_width 8
+	width_limit Infinity
+	sub / <= title
+
+$mol_dimmer $mol_paragraph
+	haystack \
+	needle \
+	sub <= parts /$mol_view_content
+	Low!id $mol_paragraph
+		sub /
+			<= string!id \
+	High!id $mol_paragraph
+		sub /
+			<= string!id \
+
+$mol_nav $mol_plugin
+	cycle?val false
+	-
+	mod_ctrl false
+	mod_shift false
+	mod_alt false
+	-
+	keys_x?val /
+	keys_y?val /
+	-
+	current_x?val \
+	current_y?val \
+	-
+	event_up?event null
+	event_down?event null
+	event_left?event null
+	event_right?event null
+	event *
+		^
+		keydown?event <=> event_key?event null
+
+$mol_list $mol_view
+	render_visible_only true
+	render_over 0
+	sub <= rows /$mol_view
+	Empty $mol_view
+	Gap_before $mol_view style * paddingTop <= gap_before 0
+	Gap_after $mol_view style * paddingTop <= gap_after 0
+	view_window /
+		0
+		0
+
+$mol_select $mol_pop
+	dictionary *
+	options /string
+	value?val \
+	Option_row!id $mol_button_minor
+		event_click?event <=> event_select!id?event null
+		sub <= option_content!id /
+			<= Option_label!id $mol_dimmer
+				haystack <= option_label!id \
+				needle <= filter_pattern?val \
+	No_options $mol_view
+		sub /
+			<= no_options_message @ \No options
+	plugins /
+		^
+		<= Nav $mol_nav
+			keys_y <= nav_components /$mol_view
+			current_y?component <=> option_focused?component null
+			cycle?val <=> nav_cycle?val true
+	showed?val <=> options_showed?val false
+	Anchor <= Trigger $mol_button_minor
+		click?event <=> open?event null
+		sub <= trigger_content /$mol_view_content
+	bubble_content /
+		<= Menu $mol_list
+			rows <= menu_content /$mol_view
+	option_content_current /$mol_view_content
+	Filter $mol_string
+		value?val <=> filter_pattern?val \
+		hint <= filter_hint <= hint @ \Search..
+		submit?event <=> submit?event null
+		enabled <= enabled true
+	Trigger_icon $mol_icon_chevron
+
 $mol_image $mol_view
 	dom_name \img
 	field *
@@ -453,45 +307,70 @@ $mol_link_iconed $mol_link
 		<= title <= uri
 	host \
 
+$mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
+
+$mol_portion_indicator $mol_view
+	style *
+		^
+		width <= width_style \0
+
+$mol_portion $mol_view
+	portion 0
+	sub /
+		<= indicator $mol_portion_indicator
+			width_style <= indicator_width_style \0
+
 $hyoo_github_compare $mol_page
-	title @ \Time of unresolving issues of GitHub projects
+	title @ \GitHub projects comparison
 	plugins /
 		<= Theme $mol_theme_auto
 	tools /
+		<= Light $mol_lights_toggle
 		<= Sources $mol_link_source
 			uri \https://github.com/hyoo-ru/github.hyoo.ru/tree/master/compare
 	body /
-		<= Projects $mol_row
-			sub <= projects /
-		<= Chart $mol_plot_pane
-			gap_left 76
-			graphs /
-				<= Capacities $mol_plot_bar
-					series_y <= capacities /number
-				<= Capacities_ruler $mol_plot_ruler_vert
-					title \Age, days
-				<= Capacities_ruler_hor $mol_plot_mark_hor
-					title \Project
-					labels <= project_labels /string
-		<= Description $mol_view
-			sub / <= description @ \Sum of ages of all open issues. Lower is better.
-	Project!index $hyoo_github_compare_project
-		id?val <=> project_id!index?val \
-
-$hyoo_github_compare_project $mol_view
-	capacity 0
-	sub /
-		<= Input $mol_view sub /
-			<= Id $mol_string
-				hint \username/repo
-				value?val <=> id?val \
-			<= Homepage $mol_link_iconed
-				uri <= homepage \
+		<= Content $mol_list
+			rows /
+				<= Columns $mol_view sub <= columns /
+					<= Add $mol_select
+						value?val <=> add?val \
+						options <= add_suggest /string
+						hint @ \Add project...
+					<= Issues_label $mol_view
+						sub /
+							<= issues_label @ \Open issues
+					<= Capacity_label $mol_view
+						sub /
+							<= capacity_label @ \Sum of ages of all open issues
+				<= Projects $mol_list
+					rows <= projects /
+	Project!id $mol_view
+		sub /
+			<= Homepage!id $mol_link_iconed
+				uri <= homepage!id \
+				hint @ \Homepage
 				content /
-		<= Capacity $mol_view
-			minimal_height 80
-			minimal_width 80
-			sub / <= capacity_text \
+			<= Repo!id $mol_link
+				uri <= repo!id \
+				title <= id!id \
+				hint @ \Repository
+			<= Remove!id $mol_button_minor
+				hint @ \Remove
+				sub / <= Remove_icon!id $mol_icon_cross
+				click?event <=> remove!id?event null
+			<= Issues!id $mol_link
+				uri <= issues_link!id \
+				sub /
+					<= Issues_count!id $mol_view
+						sub / <= issues_count!id 0
+					<= Issues_portion!id $mol_portion
+						portion <= issues_portion!id 0
+			<= Capacity!id $mol_list
+				rows /
+					<= Capacity_text!id $mol_view
+						sub / <= capacity_text!id \
+					<= Capacity_portion!id $mol_portion
+						portion <= capacity_portion!id 0
 
 $mol_view_tree_test_attributes_super $mol_view
 	some *

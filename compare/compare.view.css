@@ -1,37 +1,84 @@
-[hyoo_github_compare_body] {
-	display: flex;
-	flex-direction: column;
+[hyoo_github_compare] {
+	max-width: 60rem;
+	margin: auto;
+}
+
+[hyoo_github_compare_columns] {
+	flex-wrap: wrap;
+	padding: var(--mol_gap_block);
+}
+
+[hyoo_github_compare_add] {
+	flex: 1 1 19rem
+}
+
+[hyoo_github_compare_issues_label] {
+	padding: var(--mol_gap_text);
+	flex: 1000 1 10rem;
+}
+
+[hyoo_github_compare_capacity_label] {
+	padding: var(--mol_gap_text);
+	flex: 1000 1 10rem;
 }
 
 [hyoo_github_compare_projects] {
-	flex: 0 0 auto;
 }
 
 [hyoo_github_compare_project] {
+	flex-wrap: wrap;
+	padding: var(--mol_gap_block);
+	align-items: flex-start;
+}
+
+[hyoo_github_compare_homepage] {
+	flex: none;
+}
+
+[hyoo_github_compare_homepage_icon] {
+	margin: 0;
+}
+
+[hyoo_github_compare_repo] {
+	padding: var(--mol_gap_text);
 	flex: 1 1 14rem;
+}
+
+[hyoo_github_compare_issues] {
+	padding: var(--mol_gap_text);
+	flex: 1000 1 10rem;
+	display: flex;
 	flex-direction: column;
 }
 
-[hyoo_github_compare_project_input] {
+[hyoo_github_compare_issues_count] {
+}
+
+[hyoo_github_compare_issues_portion] {
+	flex: auto;
+	align-self: stretch;
+	width: auto;
+}
+
+[hyoo_github_compare_capacity] {
 	display: flex;
+	flex: 1000 1 10rem;
+	flex-direction: column;
+	padding: var(--mol_gap_text);
 }
 
-[hyoo_github_compare_project_id] {
-	font-weight: bold;
+[hyoo_github_compare_capacity_text] {
 }
 
-[hyoo_github_compare_project_capacity] {
-	display: block;
-	padding: 1rem;
-	font-size: 2rem;
-	line-height: 1;
+[hyoo_github_compare_capacity_portion] {
+	flex: auto;
+	align-self: stretch;
+	width: auto;
 }
 
-[hyoo_github_compare_chart] {
-	flex: 1 0 10rem;
-	margin: 0 0.5rem;
+[hyoo_github_compare_issues_portion_indicator] {
+	background-color: chocolate;
 }
-
-[hyoo_github_compare_description] {
-	padding: 1rem;
+[hyoo_github_compare_capacity_portion_indicator] {
+	background-color: crimson;
 }

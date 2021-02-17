@@ -61,13 +61,14 @@
 }
 
 [hyoo_github_compare_capacity] {
-	display: flex;
 	flex: 1000 1 10rem;
-	flex-direction: column;
-	padding: var(--mol_gap_text);
+	align-items: flex-end;
 }
 
-[hyoo_github_compare_capacity_text] {
+[hyoo_github_compare_capacity_info] {
+	padding: var(--mol_gap_text);
+	display: flex;
+	flex: 1 1 auto;
 }
 
 [hyoo_github_compare_capacity_portion] {

@@ -43,9 +43,15 @@ $hyoo_github_compare $mol_page
 						sub / <= issues_count!id 0
 					<= Issues_portion!id $mol_portion
 						portion <= issues_portion!id 0
-			<= Capacity!id $mol_list
-				rows /
-					<= Capacity_text!id $mol_view
-						sub / <= capacity_text!id \
-					<= Capacity_portion!id $mol_portion
-						portion <= capacity_portion!id 0
+			<= Capacity!id $mol_view
+				sub /
+					<= Capacity_info!id $mol_list
+						rows /
+							<= Capacity_text!id $mol_view
+								sub / <= capacity_text!id \
+							<= Capacity_portion!id $mol_portion
+								portion <= capacity_portion!id 0
+					<= Capacity_refresh!id $mol_button_minor
+						hint @ \Refresh
+						sub / <= Capacity_refresh_icon!id $mol_icon_reload
+						click?event <=> refresh!id?event null

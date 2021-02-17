@@ -6,7 +6,7 @@ namespace $.$$ {
 		project_ids( next? : string[] ) : string[] {
 			const arg = this.$.$mol_state_arg.value( 'projects' , next?.join( ',' ) )
 
-			return arg?.split( ',' ) ?? []
+			return arg?.split( ',' ).filter( Boolean ) ?? []
 		}
 
 		projects() {

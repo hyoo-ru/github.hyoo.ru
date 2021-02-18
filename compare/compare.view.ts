@@ -69,7 +69,9 @@ namespace $.$$ {
 		}
 
 		homepage( id: string ) {
-			return this.project( id ).homepage || this.repo( id )
+			let uri = this.project( id ).homepage || this.repo( id )
+			if( !/^http/.test( uri ) ) uri = 'http://' + uri
+			return uri
 		}
 
 		repo( id: string ) {

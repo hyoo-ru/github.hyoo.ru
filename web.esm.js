@@ -7530,7 +7530,10 @@ var $;
                 }, Boolean(this.refresh(id)));
             }
             homepage(id) {
-                return this.project(id).homepage || this.repo(id);
+                let uri = this.project(id).homepage || this.repo(id);
+                if (!/^http/.test(uri))
+                    uri = 'http://' + uri;
+                return uri;
             }
             repo(id) {
                 return 'https://github.com/' + id;

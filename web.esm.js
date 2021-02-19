@@ -7576,7 +7576,7 @@ var $;
                 }, Boolean(this.refresh(id)));
             }
             capacity_text(id) {
-                return this.capacity(id).toLocaleString() + ' days';
+                return (this.capacity(id) / 365).toFixed(0);
             }
             capacity_max() {
                 return this.project_ids().reduce((max, id) => {

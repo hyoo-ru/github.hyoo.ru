@@ -343,7 +343,7 @@ $hyoo_github_compare $mol_page
 							<= issues_label @ \Open issues
 					<= Capacity_label $mol_view
 						sub /
-							<= capacity_label @ \Sum of ages of all open issues
+							<= capacity_label @ \Sum of open issues ages (years)
 				<= Projects $mol_list
 					rows <= projects /
 	Project!id $mol_view

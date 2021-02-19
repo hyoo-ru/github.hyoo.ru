@@ -2,7 +2,7 @@
 	"$hyoo_github_compare_title": "Сравнение проектов на GitHub",
 	"$hyoo_github_compare_Add_hint": "Добавить проект...",
 	"$hyoo_github_compare_issues_label": "Открытые проблемы",
-	"$hyoo_github_compare_capacity_label": "Cумма возрастов всех открытых проблем",
+	"$hyoo_github_compare_capacity_label": "Cумма возрастов открытых проблем (года)",
 	"$hyoo_github_compare_Repo_hint": "Репозиторий",
 	"$hyoo_github_compare_Homepage_hint": "Домашняя страница",
 	"$hyoo_github_compare_Remove_hint": "Убрать"

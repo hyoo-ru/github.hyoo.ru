@@ -139,7 +139,7 @@ namespace $.$$ {
 		}
 		
 		capacity_text( id: string ) {
-			return this.capacity( id ).toLocaleString() + ' days'
+			return ( this.capacity( id ) / 365 ).toFixed(0)
 		}
 		
 		@ $mol_mem

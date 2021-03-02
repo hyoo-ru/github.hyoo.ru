@@ -1829,7 +1829,7 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_icon_chevron extends $mol_icon {
+    class $mol_icon_dots_vertical extends $mol_icon {
         path(): string;
     }
 }
@@ -2000,9 +2000,8 @@ declare namespace $ {
         showed(val?: any): any;
         Anchor(): $mol_button_minor;
         bubble_content(): readonly any[];
-        option_content_current(): readonly $mol_view_content[];
         Filter(): $$.$mol_string;
-        Trigger_icon(): $mol_icon_chevron;
+        Trigger_icon(): $mol_icon_dots_vertical;
         event_select(id: any, event?: any): any;
         option_label(id: any): string;
         filter_pattern(val?: any): any;
@@ -2016,11 +2015,10 @@ declare namespace $ {
         options_showed(val?: any): any;
         open(event?: any): any;
         trigger_content(): readonly $mol_view_content[];
+        hint(): string;
         Trigger(): $mol_button_minor;
         menu_content(): readonly $mol_view[];
         Menu(): $$.$mol_list;
-        hint(): string;
-        filter_hint(): string;
         submit(event?: any): any;
         enabled(): boolean;
     }
@@ -2042,10 +2040,9 @@ declare namespace $.$$ {
         options_filtered(): readonly string[];
         option_label(id: string): any;
         option_rows(): $mol_view[];
-        option_focused(component?: $mol_view): $mol_view | $mol_string;
+        option_focused(component?: $mol_view): $mol_view | $mol_string | null;
         event_select(id: string, event?: MouseEvent): void;
         nav_components(): ($mol_view | $mol_string)[];
-        option_content_current(): readonly any[];
         trigger_content(): any[];
         menu_content(): ($mol_view | $mol_string)[];
     }

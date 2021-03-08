@@ -23,15 +23,16 @@ namespace $.$$ {
 			return ids[ index ] || ''
 		}
 		
-		add( next: string ) {
+		add( id: string ) {
 			
-			if( next ) this.project_ids([
+			this.project_ids([
 				... new Set([
-					... this.project_ids(), next
+					... this.project_ids(), id
 				])
 			])
 			
-			return ''
+			this.add_query( '' )
+			
 		}
 		
 		remove( id: string ) {
@@ -158,9 +159,9 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		add_suggest() {
+		add_suggests() {
 			
-			const query = this.Add().filter_pattern()
+			const query = this.add_query()
 			if( !query ) return []
 			
 			this.$.$mol_wait_timeout( 1000 )

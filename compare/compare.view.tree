@@ -10,9 +10,10 @@ $hyoo_github_compare $mol_page
 		<= Content $mol_list
 			rows /
 				<= Columns $mol_view sub <= columns /
-					<= Add $mol_select
-						value?val <=> add?val \
-						options <= add_suggest /string
+					<= Add $mol_search
+						query?val <=> add_query?val \
+						suggest_select!text?event <=> add!text?event \
+						suggests <= add_suggests /string
 						hint @ \Add project...
 					<= Issues_label $mol_view
 						sub /

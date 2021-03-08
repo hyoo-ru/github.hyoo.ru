@@ -9,7 +9,5 @@
 	"$hyoo_github_compare_title": "GitHub projects comparison",
 	"$mol_lights_toggle_hint": "Toggle lights",
 	"$mol_link_source_hint": "Source code",
-	"$mol_select_Filter_hint": "Filter..",
-	"$mol_select_hint": "Pick..",
-	"$mol_select_no_options_message": "No options"
+	"$mol_search_hint": "Search..."
 }

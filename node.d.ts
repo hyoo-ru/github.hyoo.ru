@@ -1362,7 +1362,7 @@ declare namespace $ {
             tabindex: number;
             title: string;
         };
-        sub(): readonly any[];
+        sub(): readonly $mol_view_content[];
         checked(val?: any): any;
         Icon(): any;
         title(): string;
@@ -1381,7 +1381,7 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_check extends $.$mol_check {
         click(next?: Event): void;
-        sub(): any[];
+        sub(): readonly $mol_view_content[];
         label(): readonly any[];
     }
 }
@@ -1597,9 +1597,12 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_pop extends $.$mol_pop {
+        showed(next?: boolean): boolean;
         sub(): any[];
         height_max(): number;
         align(): string;
+        align_vert(): "suspense" | "top" | "bottom";
+        align_hor(): "suspense" | "left" | "right";
         keydown(event: KeyboardEvent): void;
     }
 }

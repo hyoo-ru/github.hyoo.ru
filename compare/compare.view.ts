@@ -92,7 +92,7 @@ namespace $.$$ {
 			return this.project_ids().reduce( ( max, id )=> {
 				try {
 					return Math.max( max, this.issues_count( id ) )
-				} catch( error ) {
+				} catch( error: any ) {
 					return max
 				}
 			} , 0 )
@@ -148,7 +148,7 @@ namespace $.$$ {
 			return this.project_ids().reduce( ( max, id )=> {
 				try {
 					return Math.max( max, this.capacity( id ) )
-				} catch( error ) {
+				} catch( error: any ) {
 					return max
 				}
 			} , 0 )

@@ -33,6 +33,7 @@ namespace $.$$ {
 			
 			this.add_query( '' )
 			
+			return ''
 		}
 		
 		remove( id: string ) {

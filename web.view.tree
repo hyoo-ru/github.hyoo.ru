@@ -43,6 +43,7 @@ $mol_speck $mol_view
 $mol_button $mol_view
 	enabled true
 	minimal_height 40
+	minimal_width 40
 	click?event null
 	event_click?event null
 	event *
@@ -139,8 +140,12 @@ $mol_link_source $mol_link
 $mol_pop $mol_view
 	event * keydown?event <=> keydown?event null
 	showed?val false
+	align_vert \
+	align_hor \
 	sub /
 		<= Anchor null
+	sub_visible /
+		<= Anchor
 		<= Bubble $mol_pop_bubble
 			align <= align \bottom_center
 			content <= bubble_content /$mol_view_content
@@ -175,8 +180,8 @@ $mol_nav $mol_plugin
 	keys_x?val /
 	keys_y?val /
 	-
-	current_x?val \
-	current_y?val \
+	current_x?val null
+	current_y?val null
 	-
 	event_up?event null
 	event_down?event null
@@ -198,7 +203,7 @@ $mol_string $mol_view
 		^
 		disabled <= disabled false
 		value <= value_changed?val <=> value?val \
-		placeholder <= hint \
+		placeholder <= hint \ 
 		spellcheck <= spellcheck false
 		autocomplete <= autocomplete_native \
 		selectionEnd <= selection_end 0
@@ -215,6 +220,8 @@ $mol_string $mol_view
 		<= Submit $mol_hotkey
 			key * enter?event <=> submit?event null
 
+$mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
+
 $mol_list $mol_view
 	render_visible_only true
 	render_over 0
@@ -228,7 +235,7 @@ $mol_list $mol_view
 
 $mol_paragraph $mol_view
 	line_height 24
-	letter_width 8
+	letter_width 7
 	width_limit Infinity
 	sub / <= title
 
@@ -254,11 +261,19 @@ $mol_search $mol_pop
 			keys_y <= nav_components /$mol_view
 			current_y?component <=> nav_focused?component null
 	showed?val <=> suggests_showed?val false
-	Anchor <= Query $mol_string
-		value?val <=> query?val \
-		hint <= hint @ \Search...
-		submit?event <=> submit?event null
-		enabled <= enabled true
+	align_hor \right
+	Anchor $mol_view
+		sub <= anchor_content /
+			<= Query $mol_string
+				value?val <=> query?val \
+				hint <= hint @ \Search...
+				submit?event <=> submit?event null
+				enabled <= enabled true
+			<= Clear $mol_button_minor
+				hint @ \Clear
+				click?event <=> clear?event null
+				sub /
+					<= Clear_icon $mol_icon_cross
 	bubble_content /$mol_view_content
 		<= Menu $mol_list
 			rows <= menu_items /$mol_view
@@ -275,6 +290,7 @@ $mol_image $mol_view
 		^
 		src <= uri \
 		alt <= title
+		loading <= loading \lazy
 
 $mol_link_iconed $mol_link
 	sub /
@@ -284,8 +300,6 @@ $mol_link_iconed $mol_link
 	content /
 		<= title <= uri
 	host \
-
-$mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
 
 $mol_portion_indicator $mol_view
 	style *

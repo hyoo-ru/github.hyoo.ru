@@ -6,7 +6,8 @@
 	"$hyoo_github_compare_capacity_label": "Cумма возрастов открытых проблем (года)",
 	"$hyoo_github_compare_issues_label": "Открытые проблемы",
 	"$hyoo_github_compare_title": "Сравнение проектов на GitHub",
-	"$mol_lights_toggle_hint": "Переключатель света",
+	"$mol_lights_toggle_hint": "Переключить освещение",
 	"$mol_link_source_hint": "Исходные коды",
+	"$mol_search_Clear_hint": "Очистить",
 	"$mol_search_hint": "Поиск.."
 }

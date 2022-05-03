@@ -2008,7 +2008,7 @@ declare namespace $ {
         Light(): $$.$mol_lights_toggle;
         Sources(): $mol_link_source;
         add_query(val?: any): string;
-        add(text: any, event?: any): string;
+        add(id: any, event?: any): string;
         add_suggests(): readonly string[];
         Add(): $$.$mol_search;
         issues_label(): string;

@@ -46,6 +46,8 @@
     "$mol_after_frame",
     "$mol_after",
     "$mol_after_timeout",
+    "$mol_promise_like",
+    "$mol_promise",
     "$mol_func_name",
     "$mol_func",
     "$mol_key",
@@ -197,7 +199,7 @@
     "$mol_range2",
     "$mol_wait_timeout",
     "$mol_wait",
-    "$mol_promise"
+    "$mol_promise_promise"
   ],
   "dependencies": {
     "jsdom": "*",

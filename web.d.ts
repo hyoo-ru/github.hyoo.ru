@@ -1047,8 +1047,8 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_huggingface_run(this: $, space: string, method: string | number, ...data: readonly any[]): readonly string[];
-    function $mol_huggingface_async(space: string, method: number, ...data: readonly any[]): Promise<[string]> & {
+    function $mol_huggingface_run(this: $, space: string, method: string | number, ...data: readonly any[]): any[] | readonly string[];
+    function $mol_huggingface_async(space: string, method: number, ...data: readonly any[]): Promise<any[]> & {
         destructor: () => void;
     };
 }
@@ -1066,7 +1066,7 @@ declare namespace $ {
         static lang(next?: string): string;
         static source(lang: string): any;
         static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
-        static text(key: string): {} | null;
+        static text(key: string): string;
         static warn(key: string): null;
     }
 }
@@ -1448,7 +1448,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_lights_toggle extends $mol_check_icon {
         Icon(): $mol_icon_brightness_6;
-        hint(): {} | null;
+        hint(): string;
         checked(val?: any): boolean;
         Lights_icon(): $mol_icon_brightness_6;
         lights(val?: any): boolean;
@@ -1514,7 +1514,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_link_source extends $mol_link {
-        hint(): {} | null;
+        hint(): string;
         sub(): readonly any[];
         Icon(): $mol_icon_github_circle;
     }
@@ -1990,7 +1990,7 @@ declare namespace $ {
         nav_focused(component?: any): any;
         Nav(): $$.$mol_nav;
         suggests_showed(val?: any): boolean;
-        hint(): {} | null;
+        hint(): string;
         submit(event?: any): any;
         enabled(): boolean;
         keyboard(): string;
@@ -2121,7 +2121,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $hyoo_github_compare extends $mol_page {
-        title(): {} | null;
+        title(): string;
         plugins(): readonly any[];
         tools(): readonly any[];
         body(): readonly any[];
@@ -2133,9 +2133,9 @@ declare namespace $ {
         add(id: any, event?: any): string;
         add_suggests(): readonly string[];
         Add(): $$.$mol_search;
-        issues_label(): {} | null;
+        issues_label(): string;
         Issues_label(): $mol_view;
-        capacity_label(): {} | null;
+        capacity_label(): string;
         Capacity_label(): $mol_view;
         columns(): readonly any[];
         Columns(): $mol_view;

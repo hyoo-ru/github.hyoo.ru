@@ -757,12 +757,8 @@ declare namespace $ {
     class $mol_scroll extends $mol_view {
         scroll_top(val?: any): number;
         scroll_left(val?: any): number;
-        field(): {
-            tabIndex: number;
-        };
-        event(): {
-            scroll: (event?: any) => any;
-        };
+        field(): Record<string, any>;
+        event(): Record<string, any>;
         tabindex(): number;
         event_scroll(event?: any): any;
     }
@@ -954,9 +950,7 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_page extends $mol_view {
         dom_name(): string;
-        field(): {
-            tabIndex: number;
-        };
+        field(): Record<string, any>;
         sub(): readonly any[];
         tabindex(): number;
         Logo(): any;
@@ -1154,9 +1148,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_theme_auto extends $mol_plugin {
-        attr(): {
-            mol_theme: string;
-        };
+        attr(): Record<string, any>;
         theme(): string;
     }
 }
@@ -1174,19 +1166,15 @@ declare namespace $ {
             [key: string]: string;
         }>;
         static value(key: string, next?: string | null): string | null;
-        static link(next: any): string;
-        static make_link(next: {
-            [key: string]: any;
-        }): string;
+        static link(next: Record<string, string | null>): string;
+        static make_link(next: Record<string, string | null>): string;
         static go(next: {
             [key: string]: string | null;
         }): void;
         constructor(prefix?: string);
         value(key: string, next?: string): string | null;
         sub(postfix: string): $mol_state_arg;
-        link(next: {
-            [key: string]: string;
-        }): string;
+        link(next: Record<string, string | null>): string;
     }
 }
 
@@ -1202,12 +1190,8 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_speck extends $mol_view {
-        attr(): {
-            mol_theme: string;
-        };
-        style(): {
-            minHeight: string;
-        };
+        attr(): Record<string, any>;
+        style(): Record<string, any>;
         sub(): readonly any[];
         theme(): string;
         value(): any;
@@ -1235,17 +1219,8 @@ declare namespace $ {
         enabled(): boolean;
         click(event?: any): any;
         event_click(event?: any): any;
-        event(): {
-            click: (event?: any) => any;
-            dblclick: (event?: any) => any;
-            keydown: (event?: any) => any;
-        };
-        attr(): {
-            disabled: boolean;
-            role: string;
-            tabindex: number;
-            title: string;
-        };
+        event(): Record<string, any>;
+        attr(): Record<string, any>;
         sub(): readonly $mol_view_content[];
         Speck(): $mol_speck;
         event_activate(event?: any): any;
@@ -1400,14 +1375,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_check extends $mol_button_minor {
-        attr(): {
-            mol_check_checked: boolean;
-            "aria-checked": string;
-            role: string;
-            disabled: boolean;
-            tabindex: number;
-            title: string;
-        };
+        attr(): Record<string, any>;
         sub(): readonly $mol_view_content[];
         checked(next?: any): boolean;
         aria_checked(): string;
@@ -1449,7 +1417,7 @@ declare namespace $ {
         dom_name_space(): string;
         font_size(): number;
         font_family(): string;
-        style_size(): {};
+        style_size(): Record<string, any>;
     }
 }
 
@@ -1462,7 +1430,7 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_svg extends $.$mol_svg {
-        computed_style(): CSSStyleDeclaration;
+        computed_style(): Record<string, any>;
         font_size(): number;
         font_family(): any;
     }
@@ -1471,10 +1439,7 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_svg_root extends $mol_svg {
         dom_name(): string;
-        attr(): {
-            viewBox: string;
-            preserveAspectRatio: string;
-        };
+        attr(): Record<string, any>;
         view_box(): string;
         aspect(): string;
     }
@@ -1486,9 +1451,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_svg_path extends $mol_svg {
         dom_name(): string;
-        attr(): {
-            d: string;
-        };
+        attr(): Record<string, any>;
         geometry(): string;
     }
 }
@@ -1533,18 +1496,10 @@ declare namespace $ {
     class $mol_link extends $mol_view {
         uri(): string;
         dom_name(): string;
-        attr(): {
-            href: string;
-            title: string;
-            target: string;
-            download: string;
-            mol_link_current: boolean;
-        };
+        attr(): Record<string, any>;
         sub(): readonly $mol_view_content[];
-        arg(): {};
-        event(): {
-            click: (event?: any) => any;
-        };
+        arg(): Record<string, any>;
+        event(): Record<string, any>;
         uri_toggle(): string;
         hint(): string;
         hint_safe(): string;
@@ -1604,13 +1559,8 @@ declare namespace $ {
     }
     class $mol_pop_bubble extends $mol_view {
         sub(): readonly $mol_view_content[];
-        style(): {
-            maxHeight: number;
-        };
-        attr(): {
-            mol_pop_align: string;
-            tabindex: number;
-        };
+        style(): Record<string, any>;
+        attr(): Record<string, any>;
         content(): readonly $mol_view_content[];
         height_max(): number;
         align(): string;
@@ -1647,10 +1597,8 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_hotkey extends $mol_plugin {
-        event(): {
-            keydown: (event?: any) => any;
-        };
-        key(): {};
+        event(): Record<string, any>;
+        key(): Record<string, any>;
         mod_ctrl(): boolean;
         mod_alt(): boolean;
         mod_shift(): boolean;
@@ -1781,9 +1729,7 @@ declare namespace $ {
         event_down(event?: any): any;
         event_left(event?: any): any;
         event_right(event?: any): any;
-        event(): {
-            keydown: (event?: any) => any;
-        };
+        event(): Record<string, any>;
         event_key(event?: any): any;
     }
 }
@@ -1808,24 +1754,9 @@ declare namespace $ {
         autocomplete(): boolean;
         selection(val?: any): readonly number[];
         auto(): readonly any[];
-        field(): {
-            disabled: boolean;
-            value: string;
-            placeholder: string;
-            spellcheck: boolean;
-            autocomplete: string;
-            selectionEnd: number;
-            selectionStart: number;
-            inputMode: string;
-            enterkeyhint: string;
-        };
-        attr(): {
-            maxlength: number;
-            type: string;
-        };
-        event(): {
-            input: (event?: any) => any;
-        };
+        field(): Record<string, any>;
+        attr(): Record<string, any>;
+        event(): Record<string, any>;
         plugins(): readonly any[];
         selection_watcher(): any;
         disabled(): boolean;
@@ -2106,20 +2037,9 @@ declare namespace $ {
 declare namespace $ {
     class $mol_image extends $mol_view {
         dom_name(): string;
-        field(): {
-            src: string;
-            alt: string;
-            loading: string;
-            decoding: string;
-            crossOrigin: any;
-        };
-        attr(): {
-            width: number;
-            height: number;
-        };
-        event(): {
-            load: (next?: any) => any;
-        };
+        field(): Record<string, any>;
+        attr(): Record<string, any>;
+        event(): Record<string, any>;
         minimal_width(): number;
         minimal_height(): number;
         uri(): string;
@@ -2168,9 +2088,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_portion_indicator extends $mol_view {
-        style(): {
-            width: string;
-        };
+        style(): Record<string, any>;
         width_style(): string;
     }
     class $mol_portion extends $mol_view {

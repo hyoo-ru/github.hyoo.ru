@@ -8000,6 +8000,5 @@ var $;
     $mol_style_attach("hyoo/github/compare/compare.view.css", "[hyoo_github_compare] {\n\tmax-width: 60rem;\n\tmargin: auto;\n}\n\n[hyoo_github_compare_columns] {\n\tflex-wrap: wrap;\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_github_compare_add] {\n\tflex: 1 1 19rem\n}\n\n[hyoo_github_compare_issues_label] {\n\tpadding: var(--mol_gap_text);\n\tflex: 1000 1 10rem;\n}\n\n[hyoo_github_compare_capacity_label] {\n\tpadding: var(--mol_gap_text);\n\tflex: 1000 1 10rem;\n}\n\n[hyoo_github_compare_projects] {\n}\n\n[hyoo_github_compare_project] {\n\tflex-wrap: wrap;\n\tpadding: var(--mol_gap_block);\n\talign-items: flex-start;\n}\n\n[hyoo_github_compare_homepage] {\n\tflex: none;\n}\n\n[hyoo_github_compare_homepage_icon] {\n\tmargin: 0;\n}\n\n[hyoo_github_compare_repo] {\n\tpadding: var(--mol_gap_text);\n\tflex: 1 1 14rem;\n}\n\n[hyoo_github_compare_issues] {\n\tpadding: var(--mol_gap_text);\n\tflex: 1000 1 10rem;\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n[hyoo_github_compare_issues_count] {\n}\n\n[hyoo_github_compare_issues_portion] {\n\tflex: auto;\n\talign-self: stretch;\n\twidth: auto;\n}\n\n[hyoo_github_compare_capacity] {\n\tflex: 1000 1 10rem;\n\talign-items: flex-end;\n}\n\n[hyoo_github_compare_capacity_info] {\n\tpadding: var(--mol_gap_text);\n\tdisplay: flex;\n\tflex: 1 1 auto;\n}\n\n[hyoo_github_compare_capacity_portion] {\n\tflex: auto;\n\talign-self: stretch;\n\twidth: auto;\n}\n\n[hyoo_github_compare_issues_portion_indicator] {\n\tbackground-color: chocolate;\n}\n[hyoo_github_compare_capacity_portion_indicator] {\n\tbackground-color: crimson;\n}\n");
 })($ || ($ = {}));
 //hyoo/github/compare/-css/compare.view.css.ts
-;
-export default $
-//# sourceMappingURL=web.mjs.map
+
+//# sourceMappingURL=web.js.map

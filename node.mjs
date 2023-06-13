@@ -8671,4 +8671,5 @@ var $;
 })($ || ($ = {}));
 //hyoo/github/compare/-css/compare.view.css.ts
 
+export default $
 //# sourceMappingURL=node.js.map

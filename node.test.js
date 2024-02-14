@@ -6620,7 +6620,7 @@ var $;
 		}
 		Clear(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.hint) = () => (this.$.$mol_locale.text("$mol_search_Clear_hint"));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$mol_search_Clear_hint")));
 			(obj.click) = (next) => ((this.clear(next)));
 			(obj.sub) = () => ([(this.Clear_icon())]);
 			return obj;
@@ -7062,7 +7062,7 @@ var $;
 			(obj.query) = (next) => ((this.add_query(next)));
 			(obj.suggest_select) = (id, next) => ((this.add(id, next)));
 			(obj.suggests) = () => ((this.add_suggests()));
-			(obj.hint) = () => (this.$.$mol_locale.text("$hyoo_github_compare_Add_hint"));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$hyoo_github_compare_Add_hint")));
 			return obj;
 		}
 		issues_label(){
@@ -7112,7 +7112,7 @@ var $;
 		Homepage(id){
 			const obj = new this.$.$mol_link_iconed();
 			(obj.uri) = () => ((this.homepage(id)));
-			(obj.hint) = () => (this.$.$mol_locale.text("$hyoo_github_compare_Homepage_hint"));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$hyoo_github_compare_Homepage_hint")));
 			(obj.content) = () => ([]);
 			return obj;
 		}
@@ -7126,7 +7126,7 @@ var $;
 			const obj = new this.$.$mol_link();
 			(obj.uri) = () => ((this.repo(id)));
 			(obj.title) = () => ((this.id(id)));
-			(obj.hint) = () => (this.$.$mol_locale.text("$hyoo_github_compare_Repo_hint"));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$hyoo_github_compare_Repo_hint")));
 			return obj;
 		}
 		Remove_icon(id){
@@ -7139,7 +7139,7 @@ var $;
 		}
 		Remove(id){
 			const obj = new this.$.$mol_button_minor();
-			(obj.hint) = () => (this.$.$mol_locale.text("$hyoo_github_compare_Remove_hint"));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$hyoo_github_compare_Remove_hint")));
 			(obj.sub) = () => ([(this.Remove_icon(id))]);
 			(obj.click) = (next) => ((this.remove(id, next)));
 			return obj;
@@ -7200,7 +7200,7 @@ var $;
 		}
 		Capacity_refresh(id){
 			const obj = new this.$.$mol_button_minor();
-			(obj.hint) = () => (this.$.$mol_locale.text("$hyoo_github_compare_Capacity_refresh_hint"));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$hyoo_github_compare_Capacity_refresh_hint")));
 			(obj.sub) = () => ([(this.Capacity_refresh_icon(id))]);
 			(obj.click) = (next) => ((this.refresh(id, next)));
 			return obj;
